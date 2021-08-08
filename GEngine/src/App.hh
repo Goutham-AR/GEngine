@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.hh"
+#include "events/AppEvent.hh"
 #include "graphics/Window.hh"
 
 #include <memory>
