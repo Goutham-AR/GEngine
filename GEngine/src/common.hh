@@ -21,6 +21,7 @@
         if (!(x))                                                   \
         {                                                           \
             ENGINE_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
+            std::exit(1);                                           \
         }                                                           \
     }
 
