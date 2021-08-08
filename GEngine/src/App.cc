@@ -30,9 +30,9 @@ App::App()
             // ENGINE_LOG_TRACE("{0}", e);
         });
 }
-App::~App()
-{
-}
+// App::~App()
+// {
+// }
 
 void App::run()
 {

@@ -13,7 +13,7 @@ class GE_PUBLIC App
 {
 public:
     App();
-    virtual ~App();
+    virtual ~App() = default;
 
     void run();
 
