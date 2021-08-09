@@ -1,4 +1,4 @@
-add_subdirectory(external/imGui)
+add_subdirectory(external/imgui)
 add_subdirectory(external/glad)
 add_subdirectory(external/GLFW)
 add_subdirectory(external/glm)

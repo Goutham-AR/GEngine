@@ -19,3 +19,7 @@ target_include_directories(
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+if (UNIX AND NOT APPLE)
+set_target_properties(imGui PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif()
