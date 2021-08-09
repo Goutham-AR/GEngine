@@ -3,6 +3,7 @@
 #include "common.hh"
 #include "events/AppEvent.hh"
 #include "graphics/Window.hh"
+#include "layers/LayerStack.hh"
 
 #include <memory>
 
@@ -17,8 +18,12 @@ public:
 
     void run();
 
+    void pushLayer(Layer* layer);
+    void pushOverlay(Layer* layer);
+
 private:
     std::unique_ptr<Window> m_window;
+    LayerStack m_layerStack;
     bool m_isRunning = true;
 };
 

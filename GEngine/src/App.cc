@@ -27,6 +27,15 @@ App::App()
                     return true;
                 });
 
+            for (auto it = m_layerStack.end() - 1; it != m_layerStack.begin() - 1; --it)
+            {
+                (*it)->onEvent(e);
+                if (e.isHandled())
+                {
+                    break;
+                }
+            }
+
             // ENGINE_LOG_TRACE("{0}", e);
         });
 }
@@ -38,8 +47,23 @@ void App::run()
 {
     while (m_isRunning)
     {
+        for (auto* layer : m_layerStack)
+        {
+            layer->onUpdate();
+        }
+
         m_window->onUpdate();
     }
+}
+
+void App::pushLayer(Layer* layer)
+{
+    m_layerStack.pushLayer(layer);
+}
+
+void App::pushOverlay(Layer* layer)
+{
+    m_layerStack.pushOverlay(layer);
 }
 
 }

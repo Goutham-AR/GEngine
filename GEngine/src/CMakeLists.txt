@@ -11,7 +11,10 @@ add_library(
         events/KeyEvent.hh
         events/MouseEvent.hh
 
-        graphics/Window.cc graphics/Window.hh
+        graphics/Window.cc   graphics/Window.hh
+
+        layers/Layer.cc      layers/Layer.hh
+        layers/LayerStack.cc layers/LayerStack.hh
 )
 
 set_target_properties(
