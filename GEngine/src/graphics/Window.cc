@@ -6,6 +6,10 @@
 
 #include <Logger.hh>
 
+#include <glad/glad.h>
+
+#include <GLFW/glfw3.h>
+
 namespace GE
 {
 
@@ -48,7 +52,7 @@ void Window::init()
         isGLFWInitialized = true;
     }
 
-    ENGINE_LOG_INFO("Initialized GLFW");
+    ENGINE_LOG_INFO("GLFW Initialization: Success");
 
     m_window = glfwCreateWindow(
         static_cast<int>(m_winData.width),
@@ -56,6 +60,11 @@ void Window::init()
         m_winData.title.c_str(),
         nullptr, nullptr);
     glfwMakeContextCurrent(m_window);
+
+    auto success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+    GE_ASSERT(success, "Failed to Initialize Glad");
+    ENGINE_LOG_INFO("Glad Initialization: Success");
+
     glfwSetWindowUserPointer(m_window, &m_winData);
 
     setVSync(true);
@@ -109,6 +118,16 @@ void Window::init()
             default:
                 break;
             }
+        });
+
+    glfwSetCharCallback(
+        m_window,
+        [](GLFWwindow* window, unsigned int codePoint) {
+            auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
+
+            KeyTypedEvent event{static_cast<int>(codePoint)};
+
+            winData->eventCallback(event);
         });
 
     glfwSetMouseButtonCallback(

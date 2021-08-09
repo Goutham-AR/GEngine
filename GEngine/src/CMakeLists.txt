@@ -15,6 +15,9 @@ add_library(
 
         layers/Layer.cc      layers/Layer.hh
         layers/LayerStack.cc layers/LayerStack.hh
+
+        layers/ImGui/ImGuiLayer.cc layers/ImGui/ImGuiLayer.hh 
+        layers/ImGui/ImGuiOpenglRenderer.cpp layers/ImGui/ImGuiOpenglRenderer.h 
 )
 
 set_target_properties(
@@ -27,8 +30,10 @@ target_link_libraries(
     ge
     PUBLIC
         spdlog
+        imGui
         glfw
         glad
+        
 )
 
 target_include_directories(

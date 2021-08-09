@@ -8,7 +8,7 @@
 #include <functional>
 #include <memory>
 
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
 
 namespace GE
 {

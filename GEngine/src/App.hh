@@ -21,10 +21,15 @@ public:
     void pushLayer(Layer* layer);
     void pushOverlay(Layer* layer);
 
+    static App& get() { return *appInstance; }
+    Window& getWindow() const { return *m_window; }
+
 private:
     std::unique_ptr<Window> m_window;
     LayerStack m_layerStack;
     bool m_isRunning = true;
+
+    static App* appInstance;
 };
 
 App* createApp();

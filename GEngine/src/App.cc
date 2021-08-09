@@ -2,13 +2,19 @@
 
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
+#include <glad/glad.h>
 
 #include <Logger.hh>
 
 namespace GE
 {
+App* App::appInstance = nullptr;
+
 App::App()
 {
+    GE_ASSERT(!appInstance, "Only one App can exist");
+    appInstance = this;
+
     m_window = Window::create();
 
     m_window->setEventCallback(
@@ -47,6 +53,8 @@ void App::run()
 {
     while (m_isRunning)
     {
+        glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
         for (auto* layer : m_layerStack)
         {
             layer->onUpdate();
@@ -59,11 +67,13 @@ void App::run()
 void App::pushLayer(Layer* layer)
 {
     m_layerStack.pushLayer(layer);
+    layer->onAttach();
 }
 
 void App::pushOverlay(Layer* layer)
 {
     m_layerStack.pushOverlay(layer);
+    layer->onAttach();
 }
 
 }

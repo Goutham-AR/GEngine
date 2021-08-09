@@ -69,4 +69,24 @@ public:
     const char* getName() const override { return TO_STRING(KeyReleased); }
 };
 
+class GE_PUBLIC KeyTypedEvent : public KeyEvent
+{
+public:
+    explicit KeyTypedEvent(int keyCode)
+        : KeyEvent{keyCode}
+    {
+    }
+
+    std::string toString() const override
+    {
+        std::stringstream sstream;
+        sstream << "KeyTypedEvent: " << m_keyCode;
+        return sstream.str();
+    }
+
+    static EventType getStaticType() { return EventType::KeyTyped; }
+    EventType getEventType() const override { return getStaticType(); }
+    const char* getName() const override { return TO_STRING(KeyTyped); }
+};
+
 }
