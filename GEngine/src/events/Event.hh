@@ -4,6 +4,7 @@
 
 #include <string>
 #include <functional>
+#include <ostream>
 
 namespace GE
 {
@@ -55,6 +56,9 @@ public:
     {
         return getCategoryFlags() & category;
     }
+
+    [[nodiscard]] bool isHandled() const { return m_handled; }
+    void setHandled(bool value) { m_handled = value; }
 
 protected:
     bool m_handled = false;
