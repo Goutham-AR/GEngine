@@ -5,9 +5,8 @@ class TestApp : public GE::App
 public:
     TestApp()
     {
-        pushOverlay(new GE::ImGuiLayer{});
+        // pushOverlay(new GE::ImGuiLayer{});
     }
-
     ~TestApp() override = default;
 };
 

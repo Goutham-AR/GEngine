@@ -10,12 +10,16 @@ class GE_PUBLIC ImGuiLayer : public Layer
 {
 public:
     ImGuiLayer();
-    ~ImGuiLayer() override;
+    ~ImGuiLayer() override = default;
 
     void onAttach() override;
     void onDetach() override;
     void onUpdate() override;
-    void onEvent(Event& event) override;
+
+    void onImGuiRender() override;
+
+    void begin();
+    void end();
 
 private:
     float m_time{};

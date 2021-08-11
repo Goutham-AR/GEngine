@@ -47,28 +47,30 @@ App::App()
 
             // ENGINE_LOG_TRACE("{0}", e);
         });
+
+    m_imGuiLayer = new ImGuiLayer{};
+    pushOverlay(m_imGuiLayer);
 }
-// App::~App()
-// {
-// }
 
 void App::run()
 {
     while (m_isRunning)
     {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.3f, 0.2f, 0.7f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
         for (auto* layer : m_layerStack)
         {
             layer->onUpdate();
         }
 
-        // auto [x, y] = Input::getMousePos();
-        // LOG_TRACE("({0}, {1})", x, y);
-
-        // LOG_TRACE("{0}", Input::isMouseButtonPressed(MouseKey::LeftButton));
-
-        // LOG_TRACE("{0}", Input::isKeyPressed(KeyCode::A));
+        m_imGuiLayer->begin();
+        // m_imGuiLayer->onImGuiRender();
+        for (auto* layer : m_layerStack)
+        {
+            layer->onImGuiRender();
+        }
+        m_imGuiLayer->end();
 
         m_window->onUpdate();
     }

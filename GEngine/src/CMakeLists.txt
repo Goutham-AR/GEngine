@@ -15,11 +15,11 @@ add_library(
         window/Input.cc       window/Input.hh
         window/KeyCode.hh
 
-        layers/Layer.cc      layers/Layer.hh
+        layers/Layer.hh
         layers/LayerStack.cc layers/LayerStack.hh
 
         layers/ImGui/ImGuiLayer.cc layers/ImGui/ImGuiLayer.hh 
-        layers/ImGui/ImGuiOpenglRenderer.cpp layers/ImGui/ImGuiOpenglRenderer.h 
+        layers/ImGui/ImGuiCore.cc
 )
 
 set_target_properties(
