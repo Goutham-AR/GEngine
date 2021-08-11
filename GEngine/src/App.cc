@@ -21,20 +21,17 @@ App::App()
     m_window = Window::create();
 
     m_window->setEventCallback(
-        [this](Event& e)
-        {
+        [this](Event& e) {
             EventDispatcher dispatcher{e};
 
             dispatcher.dispatchEvent<WindowCloseEvent>(
-                [this](WindowCloseEvent& e) -> bool
-                {
+                [this](WindowCloseEvent& e) -> bool {
                     this->m_isRunning = false;
                     return true;
                 });
 
             dispatcher.dispatchEvent<KeyPressedEvent>(
-                [this](KeyPressedEvent& e) -> bool
-                {
+                [this](KeyPressedEvent& e) -> bool {
                     // ENGINE_LOG_TRACE("{0}", e.getKeyCode());
                     return true;
                 });
@@ -69,7 +66,9 @@ void App::run()
         // auto [x, y] = Input::getMousePos();
         // LOG_TRACE("({0}, {1})", x, y);
 
-        LOG_TRACE("{0}", Input::isKeyPressed(KeyCode::A));
+        // LOG_TRACE("{0}", Input::isMouseButtonPressed(MouseKey::LeftButton));
+
+        // LOG_TRACE("{0}", Input::isKeyPressed(KeyCode::A));
 
         m_window->onUpdate();
     }

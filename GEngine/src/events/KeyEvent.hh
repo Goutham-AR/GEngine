@@ -38,7 +38,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "KeyPressedEvent: " << toInt(m_keyCode) << " (" << m_count << " repeats)";
+        sstream << "KeyPressedEvent: " << toGLFW(m_keyCode) << " (" << m_count << " repeats)";
         return sstream.str();
     }
 
@@ -61,7 +61,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "KeyReleasedEvent: " << toInt(m_keyCode);
+        sstream << "KeyReleasedEvent: " << toGLFW(m_keyCode);
         return sstream.str();
     }
 
@@ -81,7 +81,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "KeyTypedEvent: " << toInt(m_keyCode);
+        sstream << "KeyTypedEvent: " << toGLFW(m_keyCode);
         return sstream.str();
     }
 

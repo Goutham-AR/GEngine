@@ -1,6 +1,7 @@
 build*
 .vs
 out
+.idea
 
 # need to double check
 testApp/imgui.ini

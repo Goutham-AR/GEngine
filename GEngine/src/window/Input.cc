@@ -14,10 +14,10 @@ bool Input::isKeyPressed(KeyCode keyCode)
     return status == GLFW_PRESS ? true : false;
 }
 
-bool Input::isMouseButtonPressed(int button)
+bool Input::isMouseButtonPressed(MouseKey button)
 {
     auto winHandle = App::get().getWindow().getWinHandle();
-    auto status = glfwGetMouseButton(winHandle, button);
+    auto status = glfwGetMouseButton(winHandle, toGLFW(button));
     return status == GLFW_PRESS ? true : false;
 }
 std::pair<float, float> Input::getMousePos()

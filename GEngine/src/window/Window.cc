@@ -46,8 +46,7 @@ void Window::init()
         GE_ASSERT(success, "GLFW Initialization Failed");
 
         glfwSetErrorCallback(
-            [](int error, const char* description)
-            {
+            [](int error, const char* description) {
                 ENGINE_LOG_ERROR("GLFW Error: Error code -> {0}, {1}", error, description);
             });
         isGLFWInitialized = true;
@@ -72,8 +71,7 @@ void Window::init()
 
     glfwSetWindowSizeCallback(
         m_window,
-        [](GLFWwindow* window, int newWidth, int newHeight)
-        {
+        [](GLFWwindow* window, int newWidth, int newHeight) {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
             winData->width = newWidth;
             winData->height = newHeight;
@@ -86,8 +84,7 @@ void Window::init()
 
     glfwSetWindowCloseCallback(
         m_window,
-        [](GLFWwindow* window)
-        {
+        [](GLFWwindow* window) {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
             WindowCloseEvent event;
             winData->eventCallback(event);
@@ -95,8 +92,7 @@ void Window::init()
 
     glfwSetKeyCallback(
         m_window,
-        [](GLFWwindow* window, int key, int scancode, int action, int mod)
-        {
+        [](GLFWwindow* window, int key, int scancode, int action, int mod) {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             switch (action)
@@ -126,8 +122,7 @@ void Window::init()
 
     glfwSetCharCallback(
         m_window,
-        [](GLFWwindow* window, unsigned int codePoint)
-        {
+        [](GLFWwindow* window, unsigned int codePoint) {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             KeyTypedEvent event{toKeyCode(static_cast<int>(codePoint))};
@@ -137,22 +132,21 @@ void Window::init()
 
     glfwSetMouseButtonCallback(
         m_window,
-        [](GLFWwindow* window, int button, int action, int mods)
-        {
+        [](GLFWwindow* window, int button, int action, int mods) {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             switch (action)
             {
             case GLFW_PRESS:
             {
-                MouseButtonPressedEvent event{button};
+                MouseButtonPressedEvent event{toMouseKey(button)};
                 winData->eventCallback(event);
                 break;
             }
 
             case GLFW_RELEASE:
             {
-                MouseButtonReleasedEvent event{button};
+                MouseButtonReleasedEvent event{toMouseKey(button)};
                 winData->eventCallback(event);
                 break;
             }
@@ -164,8 +158,7 @@ void Window::init()
 
     glfwSetCursorPosCallback(
         m_window,
-        [](GLFWwindow* window, double newXPos, double newYPos)
-        {
+        [](GLFWwindow* window, double newXPos, double newYPos) {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             MouseMovedEvent event{
@@ -177,8 +170,7 @@ void Window::init()
 
     glfwSetScrollCallback(
         m_window,
-        [](GLFWwindow* window, double xOffset, double yOffset)
-        {
+        [](GLFWwindow* window, double xOffset, double yOffset) {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             MouseScrolledEvent event{

@@ -2,6 +2,8 @@
 
 #include "Event.hh"
 
+#include "window/KeyCode.hh"
+
 #include <sstream>
 
 namespace GE
@@ -40,23 +42,23 @@ private:
 class GE_PUBLIC MouseButtonEvent : public Event
 {
 public:
-    [[nodiscard]] inline int getMouseButton() const { return m_button; }
+    [[nodiscard]] inline MouseKey getMouseButton() const { return m_button; }
 
     [[nodiscard]] int getCategoryFlags() const override { return EC_Mouse | EC_Input; }
 
 protected:
-    explicit MouseButtonEvent(int button)
+    explicit MouseButtonEvent(MouseKey button)
         : m_button{button}
     {
     }
 
-    int m_button;
+    MouseKey m_button;
 };
 
 class GE_PUBLIC MouseButtonPressedEvent : public MouseButtonEvent
 {
 public:
-    explicit MouseButtonPressedEvent(int button)
+    explicit MouseButtonPressedEvent(MouseKey button)
         : MouseButtonEvent{button}
     {
     }
@@ -64,7 +66,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "MouseButtonPressedEvent: " << m_button;
+        sstream << "MouseButtonPressedEvent: " << toGLFW(m_button);
         return sstream.str();
     }
 
@@ -78,7 +80,7 @@ public:
 class GE_PUBLIC MouseButtonReleasedEvent : public MouseButtonEvent
 {
 public:
-    explicit MouseButtonReleasedEvent(int button)
+    explicit MouseButtonReleasedEvent(MouseKey button)
         : MouseButtonEvent{button}
     {
     }
@@ -86,7 +88,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "MouseButtonReleasedEvent: " << m_button;
+        sstream << "MouseButtonReleasedEvent: " << toGLFW(m_button);
         return sstream.str();
     }
 

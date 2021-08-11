@@ -88,24 +88,23 @@ void ImGuiLayer::onEvent(Event& event)
     EventDispatcher dispatcher{event};
 
     dispatcher.dispatchEvent<MouseButtonPressedEvent>(
-        [this](MouseButtonPressedEvent& e)
-        {
+        [this](MouseButtonPressedEvent& e) {
             auto& io = ImGui::GetIO();
-            io.MouseDown[e.getMouseButton()] = true;
+            auto mouseCode = toGLFW(e.getMouseButton());
+            io.MouseDown[mouseCode] = true;
             return false;
         });
 
     dispatcher.dispatchEvent<MouseButtonReleasedEvent>(
-        [this](MouseButtonReleasedEvent& e)
-        {
+        [this](MouseButtonReleasedEvent& e) {
             auto& io = ImGui::GetIO();
-            io.MouseDown[e.getMouseButton()] = false;
+            auto mouseCode = toGLFW(e.getMouseButton());
+            io.MouseDown[mouseCode] = false;
             return false;
         });
 
     dispatcher.dispatchEvent<MouseScrolledEvent>(
-        [this](MouseScrolledEvent& e)
-        {
+        [this](MouseScrolledEvent& e) {
             auto& io = ImGui::GetIO();
             io.MouseWheelH += e.getXOffset();
             io.MouseWheel += e.getYOffset();
@@ -114,17 +113,15 @@ void ImGuiLayer::onEvent(Event& event)
         });
 
     dispatcher.dispatchEvent<MouseMovedEvent>(
-        [this](MouseMovedEvent& e)
-        {
+        [this](MouseMovedEvent& e) {
             auto& io = ImGui::GetIO();
             io.MousePos = ImVec2(e.getX(), e.getY());
             return false;
         });
     dispatcher.dispatchEvent<KeyPressedEvent>(
-        [this](KeyPressedEvent& e)
-        {
+        [this](KeyPressedEvent& e) {
             auto& io = ImGui::GetIO();
-            auto keyCode = toInt(e.getKeyCode());
+            auto keyCode = toGLFW(e.getKeyCode());
             io.KeysDown[keyCode] = true;
 
             io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
@@ -136,19 +133,17 @@ void ImGuiLayer::onEvent(Event& event)
         });
 
     dispatcher.dispatchEvent<KeyReleasedEvent>(
-        [this](KeyReleasedEvent& e)
-        {
+        [this](KeyReleasedEvent& e) {
             auto& io = ImGui::GetIO();
-            auto keyCode = toInt(e.getKeyCode());
+            auto keyCode = toGLFW(e.getKeyCode());
             io.KeysDown[keyCode] = false;
             return false;
         });
 
     dispatcher.dispatchEvent<KeyTypedEvent>(
-        [this](KeyTypedEvent& e)
-        {
+        [this](KeyTypedEvent& e) {
             auto& io = ImGui::GetIO();
-            auto keyCode = toInt(e.getKeyCode());
+            auto keyCode = toGLFW(e.getKeyCode());
             if (keyCode > 0 && keyCode < 0x10000)
             {
                 io.AddInputCharacter(keyCode);
@@ -157,8 +152,7 @@ void ImGuiLayer::onEvent(Event& event)
         });
 
     dispatcher.dispatchEvent<WindowResizeEvent>(
-        [this](WindowResizeEvent& e)
-        {
+        [this](WindowResizeEvent& e) {
             auto& io = ImGui::GetIO();
             io.DisplaySize = ImVec2(e.getWidth(), e.getHeight());
             io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);

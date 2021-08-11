@@ -1,6 +1,8 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+namespace GE
+{
 
 enum class KeyCode
 {
@@ -129,5 +131,17 @@ enum class KeyCode
 
 };
 
-inline constexpr int toInt(KeyCode code) { return static_cast<int>(code); }
+enum class MouseKey : int
+{
+    LeftButton = GLFW_MOUSE_BUTTON_LEFT,
+    RightButton = GLFW_MOUSE_BUTTON_RIGHT,
+    MiddleButton = GLFW_MOUSE_BUTTON_MIDDLE
+};
+
+inline constexpr int toGLFW(KeyCode code) { return static_cast<int>(code); }
 inline constexpr KeyCode toKeyCode(int code) { return static_cast<KeyCode>(code); }
+
+inline constexpr int toGLFW(MouseKey code) { return static_cast<int>(code); }
+inline constexpr MouseKey toMouseKey(int code) { return static_cast<MouseKey>(code); }
+
+}

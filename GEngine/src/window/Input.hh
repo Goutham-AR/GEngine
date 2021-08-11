@@ -16,7 +16,7 @@ public:
     ~Input() = delete;
 
     static bool isKeyPressed(KeyCode keyCode);
-    static bool isMouseButtonPressed(int button);
+    static bool isMouseButtonPressed(MouseKey button);
     static std::pair<float, float> getMousePos();
     static float getMousePosX() { return getMousePos().first; }
     static float getMousePosY() { return getMousePos().second; }
