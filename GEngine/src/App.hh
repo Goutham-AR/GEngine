@@ -2,7 +2,7 @@
 
 #include "common.hh"
 #include "events/AppEvent.hh"
-#include "graphics/Window.hh"
+#include "window/Window.hh"
 #include "layers/LayerStack.hh"
 
 #include <memory>
@@ -22,7 +22,7 @@ public:
     void pushOverlay(Layer* layer);
 
     static App& get() { return *appInstance; }
-    Window& getWindow() const { return *m_window; }
+    [[nodiscard]] Window& getWindow() const { return *m_window; }
 
 private:
     std::unique_ptr<Window> m_window;

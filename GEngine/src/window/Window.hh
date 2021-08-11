@@ -38,6 +38,7 @@ public:
 
     [[nodiscard]] unsigned int getWidth() const { return m_winData.width; };
     [[nodiscard]] unsigned int getheight() const { return m_winData.height; };
+    [[nodiscard]] GLFWwindow* getWinHandle() const { return m_window; }
 
     void onUpdate();
 

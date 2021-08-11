@@ -1,5 +1,6 @@
 #include "App.hh"
 
+#include "window/Input.hh"
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
 #include <glad/glad.h>
@@ -18,17 +19,20 @@ App::App()
     m_window = Window::create();
 
     m_window->setEventCallback(
-        [this](Event& e) {
+        [this](Event& e)
+        {
             EventDispatcher dispatcher{e};
 
             dispatcher.dispatchEvent<WindowCloseEvent>(
-                [this](WindowCloseEvent& e) -> bool {
+                [this](WindowCloseEvent& e) -> bool
+                {
                     this->m_isRunning = false;
                     return true;
                 });
 
             dispatcher.dispatchEvent<KeyPressedEvent>(
-                [this](KeyPressedEvent& e) -> bool {
+                [this](KeyPressedEvent& e) -> bool
+                {
                     ENGINE_LOG_TRACE("{0}", e.getKeyCode());
                     return true;
                 });
@@ -53,12 +57,15 @@ void App::run()
 {
     while (m_isRunning)
     {
-        glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         for (auto* layer : m_layerStack)
         {
             layer->onUpdate();
         }
+
+        auto [x, y] = Input::getMousePos();
+        LOG_TRACE("({0}, {1})", x, y);
 
         m_window->onUpdate();
     }

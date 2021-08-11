@@ -11,7 +11,9 @@ add_library(
         events/KeyEvent.hh
         events/MouseEvent.hh
 
-        graphics/Window.cc   graphics/Window.hh
+        window/Window.cc   window/Window.hh
+        window/Input.cc       window/Input.hh
+
 
         layers/Layer.cc      layers/Layer.hh
         layers/LayerStack.cc layers/LayerStack.hh
@@ -33,6 +35,7 @@ target_link_libraries(
         imGui
         glfw
         glad
+        glm
         
 )
 
