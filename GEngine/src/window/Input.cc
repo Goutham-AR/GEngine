@@ -6,10 +6,11 @@
 namespace GE
 {
 
-bool Input::isKeyPressed(int keyCode)
+bool Input::isKeyPressed(KeyCode keyCode)
 {
     auto winHandle = App::get().getWindow().getWinHandle();
-    auto status = glfwGetKey(winHandle, keyCode);
+    auto glfwCode = static_cast<int>(keyCode);
+    auto status = glfwGetKey(winHandle, glfwCode);
     return status == GLFW_PRESS ? true : false;
 }
 

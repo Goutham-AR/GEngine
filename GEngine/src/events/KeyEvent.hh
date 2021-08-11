@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.hh"
+#include "window/KeyCode.hh"
 
 #include <sstream>
 
@@ -12,21 +13,21 @@ class GE_PUBLIC KeyEvent : public Event
 
 public:
     [[nodiscard]] int getCategoryFlags() const override { return EC_KeyBoard | EC_Input; }
-    [[nodiscard]] int getKeyCode() const { return m_keyCode; }
+    [[nodiscard]] KeyCode getKeyCode() const { return m_keyCode; }
 
 protected:
-    explicit KeyEvent(int keyCode)
+    explicit KeyEvent(KeyCode keyCode)
         : m_keyCode{keyCode}
     {
     }
 
-    int m_keyCode;
+    KeyCode m_keyCode;
 };
 
 class GE_PUBLIC KeyPressedEvent : public KeyEvent
 {
 public:
-    explicit KeyPressedEvent(int keyCode, int count)
+    explicit KeyPressedEvent(KeyCode keyCode, int count)
         : KeyEvent{keyCode},
           m_count{count}
     {
@@ -37,7 +38,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "KeyPressedEvent: " << m_keyCode << " (" << m_count << " repeats)";
+        sstream << "KeyPressedEvent: " << toInt(m_keyCode) << " (" << m_count << " repeats)";
         return sstream.str();
     }
 
@@ -52,7 +53,7 @@ private:
 class GE_PUBLIC KeyReleasedEvent : public KeyEvent
 {
 public:
-    explicit KeyReleasedEvent(int keyCode)
+    explicit KeyReleasedEvent(KeyCode keyCode)
         : KeyEvent{keyCode}
     {
     }
@@ -60,7 +61,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "KeyReleasedEvent: " << m_keyCode;
+        sstream << "KeyReleasedEvent: " << toInt(m_keyCode);
         return sstream.str();
     }
 
@@ -72,7 +73,7 @@ public:
 class GE_PUBLIC KeyTypedEvent : public KeyEvent
 {
 public:
-    explicit KeyTypedEvent(int keyCode)
+    explicit KeyTypedEvent(KeyCode keyCode)
         : KeyEvent{keyCode}
     {
     }
@@ -80,7 +81,7 @@ public:
     [[nodiscard]] std::string toString() const override
     {
         std::stringstream sstream;
-        sstream << "KeyTypedEvent: " << m_keyCode;
+        sstream << "KeyTypedEvent: " << toInt(m_keyCode);
         return sstream.str();
     }
 

@@ -3,6 +3,7 @@
 #include <utility>
 
 #include "common.hh"
+#include "KeyCode.hh"
 
 namespace GE
 {
@@ -14,7 +15,7 @@ public:
     Input() = delete;
     ~Input() = delete;
 
-    static bool isKeyPressed(int keyCode);
+    static bool isKeyPressed(KeyCode keyCode);
     static bool isMouseButtonPressed(int button);
     static std::pair<float, float> getMousePos();
     static float getMousePosX() { return getMousePos().first; }

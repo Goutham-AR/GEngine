@@ -11,9 +11,9 @@ add_library(
         events/KeyEvent.hh
         events/MouseEvent.hh
 
-        window/Window.cc   window/Window.hh
+        window/Window.cc      window/Window.hh
         window/Input.cc       window/Input.hh
-
+        window/KeyCode.hh
 
         layers/Layer.cc      layers/Layer.hh
         layers/LayerStack.cc layers/LayerStack.hh
@@ -49,6 +49,8 @@ target_compile_definitions(
     ge
     PRIVATE
         GE_BUILD_DLL
+        
     PUBLIC
         $<$<CONFIG:Debug>:GE_DEBUG>
+        GLFW_INCLUDE_NONE
 )

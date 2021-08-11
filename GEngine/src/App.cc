@@ -1,9 +1,11 @@
 #include "App.hh"
 
+#include <glad/glad.h>
+
 #include "window/Input.hh"
+#include "window/KeyCode.hh"
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
-#include <glad/glad.h>
 
 #include <Logger.hh>
 
@@ -33,7 +35,7 @@ App::App()
             dispatcher.dispatchEvent<KeyPressedEvent>(
                 [this](KeyPressedEvent& e) -> bool
                 {
-                    ENGINE_LOG_TRACE("{0}", e.getKeyCode());
+                    // ENGINE_LOG_TRACE("{0}", e.getKeyCode());
                     return true;
                 });
 
@@ -64,8 +66,10 @@ void App::run()
             layer->onUpdate();
         }
 
-        auto [x, y] = Input::getMousePos();
-        LOG_TRACE("({0}, {1})", x, y);
+        // auto [x, y] = Input::getMousePos();
+        // LOG_TRACE("({0}, {1})", x, y);
+
+        LOG_TRACE("{0}", Input::isKeyPressed(KeyCode::A));
 
         m_window->onUpdate();
     }
