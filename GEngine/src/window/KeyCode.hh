@@ -129,5 +129,5 @@ enum class KeyCode
 
 };
 
-inline int toInt(KeyCode code) { return static_cast<int>(code); }
-inline KeyCode toKeyCode(int code) { return static_cast<KeyCode>(code); }
+inline constexpr int toInt(KeyCode code) { return static_cast<int>(code); }
+inline constexpr KeyCode toKeyCode(int code) { return static_cast<KeyCode>(code); }
