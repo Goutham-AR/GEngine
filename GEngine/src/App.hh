@@ -8,7 +8,9 @@
 #include "window/Window.hh"
 #include "layers/LayerStack.hh"
 #include "layers/ImGui/ImGuiLayer.hh"
-#include <graphics/GL/Shader.hh>
+
+#include <graphics/GL/GLShader.hh>
+#include <graphics/Buffers.hh>
 
 namespace GE
 {
@@ -39,8 +41,10 @@ private:
 
 // Temporary (Should be abstracted into a renderer)
 private:
-    unsigned int m_vao, m_vbo, m_ibo;
-    Shader m_ShaderProgram;
+    unsigned int m_vao;
+    std::unique_ptr<Shader> m_ShaderProgram;
+    std::unique_ptr<VertexBuffer> m_vbo;
+    std::unique_ptr<IndexBuffer> m_ibo;
 };
 
 App* createApp();

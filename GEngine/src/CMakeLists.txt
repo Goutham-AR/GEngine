@@ -22,8 +22,11 @@ add_library(
         layers/ImGui/ImGuiCore.cc
 
         graphics/GraphicsContext.hh
+        graphics/Buffers.cc graphics/Buffers.hh
+
         graphics/GL/GLContext.cc graphics/GL/GLContext.hh
-        graphics/GL/Shader.cc graphics/GL/Shader.hh
+        graphics/GL/GLShader.cc graphics/GL/GLShader.hh
+        graphics/GL/GLBuffers.cc graphics/GL/GLBuffers.hh
 )
 
 set_target_properties(
