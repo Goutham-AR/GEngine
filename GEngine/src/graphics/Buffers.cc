@@ -17,9 +17,9 @@ VertexBuffer* VertexBuffer::create(float* vertices, std::size_t size)
         
 }
 
-IndexBuffer* IndexBuffer::create(std::uint32_t* indices, std::size_t size)
+IndexBuffer* IndexBuffer::create(std::uint32_t* indices, std::uint32_t count)
 {
-    return new GLIndexBuffer{indices, size};
+    return new GLIndexBuffer{indices, count};
 }
 
 }

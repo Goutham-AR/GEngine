@@ -4,6 +4,12 @@
 namespace GE
 {
 
+
+
+    
+// -------------------------------------------------------
+// ------------------- VertexBuffer -----------------------
+// -------------------------------------------------------
 GLVertexBuffer::GLVertexBuffer(float* vertices, std::size_t size)
 {
     glCreateBuffers(1, &m_handle);
@@ -27,11 +33,15 @@ void GLVertexBuffer::unbind() const
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-GLIndexBuffer::GLIndexBuffer(std::uint32_t* indices, std::size_t size)
+// -------------------------------------------------------
+// ------------------- IndexBuffer -----------------------
+// -------------------------------------------------------
+GLIndexBuffer::GLIndexBuffer(std::uint32_t* indices, std::uint32_t count)
+    : m_count{count}
 {
     glCreateBuffers(1, &m_handle);
     bind();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(std::uint32_t), indices, GL_STATIC_DRAW);
     unbind();
 }
 
@@ -48,6 +58,11 @@ void GLIndexBuffer::bind() const
 void GLIndexBuffer::unbind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+std::uint32_t GLIndexBuffer::getCount() const
+{
+    return m_count;
 }
 
 
