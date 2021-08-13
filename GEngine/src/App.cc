@@ -1,12 +1,13 @@
 #include "App.hh"
 
+#include <array>
+
 #include <glad/glad.h>
 
 #include "window/Input.hh"
 #include "window/KeyCode.hh"
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
-
 #include <Logger.hh>
 
 namespace GE
@@ -61,21 +62,21 @@ App::App()
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 
-    float vertices[] = {
+    std::array<float, 9> vertices {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         0.0f, 0.5f, 0.0f
     };
-
-    m_vbo = std::unique_ptr<VertexBuffer>{VertexBuffer::create(vertices, sizeof(vertices))};
+    m_vbo.reset(VertexBuffer::create(&vertices[0], sizeof(float) * vertices.size()));
     m_vbo->bind();
+
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-    unsigned int indices[] = {
+    std::array<std::uint32_t, 3> indices {
         0, 1, 2
     };
-    m_ibo.reset(IndexBuffer::create(indices, sizeof(indices)));
+    m_ibo.reset(IndexBuffer::create(&indices[0], indices.size()));
     m_ibo->bind();
 }
 
@@ -89,7 +90,7 @@ void App::run()
 
         m_ShaderProgram->bind();
         glBindVertexArray(m_vao);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, m_ibo->getCount(), GL_UNSIGNED_INT, nullptr);
 
         for (auto layer : m_layerStack)
         {

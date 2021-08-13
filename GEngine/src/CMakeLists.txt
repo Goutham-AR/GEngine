@@ -24,6 +24,7 @@ add_library(
         graphics/GraphicsContext.hh
         graphics/Buffers.cc graphics/Buffers.hh
         graphics/Shader.cc graphics/Shader.hh
+        graphics/Renderer.cc graphics/Renderer.hh
 
         graphics/GL/GLContext.cc graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc graphics/GL/GLShader.hh
@@ -39,11 +40,11 @@ set_target_properties(
 target_link_libraries(
     ge
     PUBLIC
-        spdlog
         imGui
         glfw
         glad
         glm
+        spdlog
         
 )
 
