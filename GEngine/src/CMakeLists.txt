@@ -23,6 +23,7 @@ add_library(
 
         graphics/GraphicsContext.hh
         graphics/Buffers.cc graphics/Buffers.hh
+        graphics/Shader.cc graphics/Shader.hh
 
         graphics/GL/GLContext.cc graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc graphics/GL/GLShader.hh

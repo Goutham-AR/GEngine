@@ -9,7 +9,7 @@
 #include "layers/LayerStack.hh"
 #include "layers/ImGui/ImGuiLayer.hh"
 
-#include <graphics/GL/GLShader.hh>
+#include <graphics/Shader.hh>
 #include <graphics/Buffers.hh>
 
 namespace GE

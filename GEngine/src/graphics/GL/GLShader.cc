@@ -1,4 +1,4 @@
-#include "Shader.hh"
+#include "GLShader.hh"
 
 #include <vector>
 #include <fstream>
@@ -9,7 +9,7 @@
 namespace GE
 {
 
-Shader::Shader(std::string_view vertexPath, std::string_view fragmentPath)
+GLShader::GLShader(std::string_view vertexPath, std::string_view fragmentPath)
 {
 
     // Read our shaders into the appropriate buffers
@@ -123,22 +123,22 @@ Shader::Shader(std::string_view vertexPath, std::string_view fragmentPath)
     glDetachShader(m_handle, fragmentShader);
 }
 
-Shader::~Shader()
+GLShader::~GLShader()
 {
     glDeleteProgram(m_handle);
 }
 
-void Shader::bind() const
+void GLShader::bind() const
 {
     glUseProgram(m_handle);
 }
 
-void Shader::unbind() const
+void GLShader::unbind() const
 {
     glUseProgram(0);
 }
 
-std::string Shader::readFromFile(std::string_view filePath)
+std::string GLShader::readFromFile(std::string_view filePath)
 {
     std::ifstream file{filePath.data(), std::ios::in | std::ios::ate};
     if (file.is_open())

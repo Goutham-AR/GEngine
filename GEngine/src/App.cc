@@ -55,7 +55,7 @@ App::App()
     m_imGuiLayer = new ImGuiLayer{};
     pushOverlay(m_imGuiLayer);
 
-    m_ShaderProgram = std::make_unique<Shader>("assets/vertex.glsl", "assets/fragment.glsl");
+    m_ShaderProgram.reset(Shader::create("assets/vertex.glsl", "assets/fragment.glsl"));
 
     // Temporary Rendering code
     glGenVertexArrays(1, &m_vao);
