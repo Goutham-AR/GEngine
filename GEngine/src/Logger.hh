@@ -1,10 +1,13 @@
 #pragma once
 
-#include "common.hh"
+// cpp std
+#include <memory>
 
+// external
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
-#include <memory>
+
+#include "common.hh"
 
 namespace GE
 {

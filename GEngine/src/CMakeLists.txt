@@ -20,6 +20,10 @@ add_library(
 
         layers/ImGui/ImGuiLayer.cc layers/ImGui/ImGuiLayer.hh 
         layers/ImGui/ImGuiCore.cc
+
+        graphics/GraphicsContext.hh
+        graphics/GL/GLContext.cc graphics/GL/GLContext.hh
+        graphics/GL/Shader.cc graphics/GL/Shader.hh
 )
 
 set_target_properties(
@@ -48,9 +52,10 @@ target_include_directories(
 target_compile_definitions(
     ge
     PRIVATE
-        GE_BUILD_DLL
+        GE_ENABLE_EXPORT
         
     PUBLIC
         $<$<CONFIG:Debug>:GE_DEBUG>
         GLFW_INCLUDE_NONE
+        GE_BUILD_DLL
 )

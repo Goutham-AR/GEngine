@@ -5,8 +5,8 @@
 #include "events/MouseEvent.hh"
 
 #include <Logger.hh>
-
-#include <glad/glad.h>
+#include <graphics/GraphicsContext.hh>
+#include <graphics/GL/GLContext.hh>
 
 #include <GLFW/glfw3.h>
 
@@ -27,13 +27,12 @@ Window::Window(const WindowProps& props)
     m_winData.title = props.title;
     m_winData.width = props.width;
     m_winData.height = props.height;
-
     init();
 }
 
 Window::~Window()
 {
-    glfwDestroyWindow(m_window);
+    shutdown();
 }
 
 void Window::init()
@@ -46,12 +45,12 @@ void Window::init()
         GE_ASSERT(success, "GLFW Initialization Failed");
 
         glfwSetErrorCallback(
-            [](int error, const char* description) {
+            [](int error, const char* description)
+            {
                 ENGINE_LOG_ERROR("GLFW Error: Error code -> {0}, {1}", error, description);
             });
         isGLFWInitialized = true;
     }
-
     ENGINE_LOG_INFO("GLFW Initialization: Success");
 
     m_window = glfwCreateWindow(
@@ -59,19 +58,17 @@ void Window::init()
         static_cast<int>(m_winData.height),
         m_winData.title.c_str(),
         nullptr, nullptr);
-    glfwMakeContextCurrent(m_window);
 
-    auto success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    GE_ASSERT(success, "Failed to Initialize Glad");
-    ENGINE_LOG_INFO("Glad Initialization: Success");
+    m_context = new GLContext{m_window};
+    m_context->init();
 
     glfwSetWindowUserPointer(m_window, &m_winData);
-
     setVSync(true);
 
     glfwSetWindowSizeCallback(
         m_window,
-        [](GLFWwindow* window, int newWidth, int newHeight) {
+        [](GLFWwindow* window, int newWidth, int newHeight)
+        {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
             winData->width = newWidth;
             winData->height = newHeight;
@@ -84,7 +81,8 @@ void Window::init()
 
     glfwSetWindowCloseCallback(
         m_window,
-        [](GLFWwindow* window) {
+        [](GLFWwindow* window)
+        {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
             WindowCloseEvent event;
             winData->eventCallback(event);
@@ -92,7 +90,8 @@ void Window::init()
 
     glfwSetKeyCallback(
         m_window,
-        [](GLFWwindow* window, int key, int scancode, int action, int mod) {
+        [](GLFWwindow* window, int key, int scancode, int action, int mod)
+        {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             switch (action)
@@ -118,11 +117,12 @@ void Window::init()
             default:
                 break;
             }
-        });
+        }); // glfwSetKeyCallback
 
     glfwSetCharCallback(
         m_window,
-        [](GLFWwindow* window, unsigned int codePoint) {
+        [](GLFWwindow* window, unsigned int codePoint)
+        {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             KeyTypedEvent event{toKeyCode(static_cast<int>(codePoint))};
@@ -132,7 +132,8 @@ void Window::init()
 
     glfwSetMouseButtonCallback(
         m_window,
-        [](GLFWwindow* window, int button, int action, int mods) {
+        [](GLFWwindow* window, int button, int action, int mods)
+        {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             switch (action)
@@ -158,7 +159,8 @@ void Window::init()
 
     glfwSetCursorPosCallback(
         m_window,
-        [](GLFWwindow* window, double newXPos, double newYPos) {
+        [](GLFWwindow* window, double newXPos, double newYPos)
+        {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             MouseMovedEvent event{
@@ -170,7 +172,8 @@ void Window::init()
 
     glfwSetScrollCallback(
         m_window,
-        [](GLFWwindow* window, double xOffset, double yOffset) {
+        [](GLFWwindow* window, double xOffset, double yOffset)
+        {
             auto* winData = static_cast<WinData*>(glfwGetWindowUserPointer(window));
 
             MouseScrolledEvent event{
@@ -179,7 +182,7 @@ void Window::init()
 
             winData->eventCallback(event);
         });
-}
+}   // Window::init()
 
 void Window::setEventCallback(const EventCallbackFn& callback)
 {
@@ -189,7 +192,7 @@ void Window::setEventCallback(const EventCallbackFn& callback)
 void Window::onUpdate()
 {
     glfwPollEvents();
-    glfwSwapBuffers(m_window);
+    m_context->swapBuffers();
 }
 
 void Window::setVSync(bool value)
@@ -209,6 +212,12 @@ void Window::setVSync(bool value)
 bool Window::isVSyncEnabled() const
 {
     return m_winData.vSync;
+}
+
+void Window::shutdown()
+{
+    glfwDestroyWindow(m_window);
+    glfwTerminate();
 }
 
 };

@@ -15,3 +15,8 @@ set_target_properties(
         RUNTIME_OUTPUT_DIRECTORY
             ${CMAKE_BINARY_DIR}/bin
 )
+
+set_property(
+    TARGET testApp
+    PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+)

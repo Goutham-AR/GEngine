@@ -1,12 +1,14 @@
 #pragma once
 
+// cpp std
+#include <memory>
+
 #include "common.hh"
 #include "events/AppEvent.hh"
 #include "window/Window.hh"
 #include "layers/LayerStack.hh"
 #include "layers/ImGui/ImGuiLayer.hh"
-
-#include <memory>
+#include <graphics/GL/Shader.hh>
 
 namespace GE
 {
@@ -33,6 +35,12 @@ private:
     bool m_isRunning = true;
 
     static App* appInstance;
+
+
+// Temporary (Should be abstracted into a renderer)
+private:
+    unsigned int m_vao, m_vbo, m_ibo;
+    Shader m_ShaderProgram;
 };
 
 App* createApp();

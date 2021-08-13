@@ -10,8 +10,11 @@
 
 struct GLFWwindow;
 
+
 namespace GE
 {
+
+    class GraphicsContext;
 
 struct WindowProps final
 {
@@ -66,6 +69,7 @@ private:
 private:
     WinData m_winData;
     GLFWwindow* m_window;
+    GraphicsContext* m_context;
 };
 
 }

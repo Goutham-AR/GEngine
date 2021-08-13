@@ -5,3 +5,5 @@ out
 
 # need to double check
 testApp/imgui.ini
+
+CMakeSettings.json
