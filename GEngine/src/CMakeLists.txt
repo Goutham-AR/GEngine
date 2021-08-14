@@ -26,11 +26,14 @@ add_library(
         graphics/VertexArray.cc graphics/VertexArray.hh
         graphics/Shader.cc graphics/Shader.hh
         graphics/Renderer.cc graphics/Renderer.hh
+        graphics/RendererAPI.cc graphics/RendererAPI.hh
+        graphics/RenderCommand.cc graphics/RenderCommand.hh
 
         graphics/GL/GLContext.cc graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc graphics/GL/GLShader.hh
         graphics/GL/GLBuffers.cc graphics/GL/GLBuffers.hh
         graphics/GL/GLVertexArray.cc graphics/GL/GLVertexArray.hh
+        graphics/GL/GLRendererAPI.cc graphics/GL/GLRendererAPI.hh
 
         utils/FileIO.cc utils/FileIO.hh
 )

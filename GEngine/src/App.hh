@@ -39,14 +39,10 @@ private:
 
     static App* appInstance;
 
-    // Temporary (Should be abstracted into a renderer)
 private:
     std::unique_ptr<Shader> m_ShaderProgram;
-    std::unique_ptr<VertexArray> m_vao;
-    // std::shared_ptr<VertexBuffer> m_vbo;
-    // std::shared_ptr<IndexBuffer> m_ibo;
-
-    std::unique_ptr<VertexArray> m_vao2;
+    std::shared_ptr<VertexArray> m_vao;
+    std::shared_ptr<VertexArray> m_vao2;
 };
 
 App* createApp();

@@ -2,13 +2,12 @@
 
 #include <array>
 
-#include <glad/glad.h>
-
-#include "window/Input.hh"
-#include "window/KeyCode.hh"
+#include <Logger.hh>
+#include <window/Input.hh>
+#include <window/KeyCode.hh>
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
-#include <Logger.hh>
+#include <graphics/Renderer.hh>
 
 namespace GE
 {
@@ -107,17 +106,12 @@ void App::run()
 {
     while (m_isRunning)
     {
-        // temp, should be replaced after making a renderer
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
+        RenderCommand::clear(glm::vec4{0.1f, 0.1f, 0.1f, 1.0f});
+        Renderer::begin();
         m_ShaderProgram->bind();
-
-        m_vao2->bind();
-        glDrawElements(GL_TRIANGLES, m_vao2->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
-
-        m_vao->bind();
-        glDrawElements(GL_TRIANGLES, m_vao->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+        Renderer::submit(m_vao2);
+        Renderer::submit(m_vao);
+        Renderer::end();
 
         for (auto layer : m_layerStack)
         {
