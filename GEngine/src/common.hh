@@ -7,10 +7,10 @@
 #else
 #define GE_PUBLIC __declspec(dllimport)
 #endif // GE_ENABLE_EXPORT
-#else // GE_BUILD_DLL
+#else  // GE_BUILD_DLL
 #define GE_PUBLIC
-#endif // GE_BUILD_DLL
-#elif defined(__linux__)    // _WIN32
+#endif                   // GE_BUILD_DLL
+#elif defined(__linux__) // _WIN32
 #define GE_PUBLIC
 #endif // _WIN32
 
@@ -18,13 +18,14 @@
 
 // Assertion Macros
 #if defined(GE_DEBUG)
-#define GE_ASSERT(x, ...)                                           \
-    {                                                               \
-        if (!(x))                                                   \
-        {                                                           \
-            ENGINE_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
-            std::exit(1);                                           \
-        }                                                           \
+#define GE_ASSERT(x, ...)                                                                          \
+    {                                                                                              \
+        if (!(x))                                                                                  \
+        {                                                                                          \
+            ENGINE_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__);                                \
+            ENGINE_LOG_ERROR("Line: {0}, File: {1}, Function: {2}", __LINE__, __FILE__, __func__); \
+            std::exit(1);                                                                          \
+        }                                                                                          \
     }
 #else
 #define GE_ASSERT(x, ...)
