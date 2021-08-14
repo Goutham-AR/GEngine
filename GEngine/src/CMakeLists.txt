@@ -23,12 +23,14 @@ add_library(
 
         graphics/GraphicsContext.hh
         graphics/Buffers.cc graphics/Buffers.hh
+        graphics/VertexArray.cc graphics/VertexArray.hh
         graphics/Shader.cc graphics/Shader.hh
         graphics/Renderer.cc graphics/Renderer.hh
 
         graphics/GL/GLContext.cc graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc graphics/GL/GLShader.hh
         graphics/GL/GLBuffers.cc graphics/GL/GLBuffers.hh
+        graphics/GL/GLVertexArray.cc graphics/GL/GLVertexArray.hh
 
         utils/FileIO.cc utils/FileIO.hh
 )

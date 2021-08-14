@@ -11,6 +11,7 @@
 
 #include <graphics/Shader.hh>
 #include <graphics/Buffers.hh>
+#include <graphics/VertexArray.hh>
 
 namespace GE
 {
@@ -38,13 +39,14 @@ private:
 
     static App* appInstance;
 
-
-// Temporary (Should be abstracted into a renderer)
+    // Temporary (Should be abstracted into a renderer)
 private:
-    unsigned int m_vao;
     std::unique_ptr<Shader> m_ShaderProgram;
-    std::unique_ptr<VertexBuffer> m_vbo;
-    std::unique_ptr<IndexBuffer> m_ibo;
+    std::unique_ptr<VertexArray> m_vao;
+    // std::shared_ptr<VertexBuffer> m_vbo;
+    // std::shared_ptr<IndexBuffer> m_ibo;
+
+    std::unique_ptr<VertexArray> m_vao2;
 };
 
 App* createApp();

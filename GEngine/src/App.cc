@@ -59,41 +59,48 @@ App::App()
     m_ShaderProgram.reset(Shader::create("assets/vertex.glsl", "assets/fragment.glsl"));
 
     // Temporary Rendering code
-    glGenVertexArrays(1, &m_vao);
-    glBindVertexArray(m_vao);
+    m_vao.reset(VertexArray::create());
 
     std::array<float, 21> vertices{
         -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
         0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
-    m_vbo.reset(VertexBuffer::create(&vertices[0], sizeof(float) * vertices.size()));
-    m_vbo->bind();
-
-    BufferLayout layout = {
-        {ShaderDataType::Float3, "a_position", false},
-        {ShaderDataType::Float4, "a_color", false},
-    };
-
-    m_vbo->setLayout(layout);
-
-    auto index = 0;
-    for (auto& elem : layout)
+    auto vbo = std::shared_ptr<VertexBuffer>(VertexBuffer::create(&vertices[0], sizeof(float) * vertices.size()));
     {
-        glEnableVertexAttribArray(index);
-        glVertexAttribPointer(
-            index,
-            elem.getPerVertexCount(),
-            ShaderDataTypeToGLtype(elem.type),
-            elem.isNormalized ? GL_TRUE : GL_FALSE,
-            layout.getStride(),
-            reinterpret_cast<const void*>(elem.offset));
+        BufferLayout layout = {
+            {ShaderDataType::Float3, "a_position", false},
+            {ShaderDataType::Float4, "a_color", false},
+        };
 
-        ++index;
+        vbo->setLayout(layout);
     }
+    m_vao->addVertexBuffer(vbo);
 
     std::array<std::uint32_t, 3> indices{0, 1, 2};
-    m_ibo.reset(IndexBuffer::create(&indices[0], indices.size()));
-    m_ibo->bind();
+    auto ibo = std::shared_ptr<IndexBuffer>(IndexBuffer::create(&indices[0], indices.size()));
+    m_vao->addIndexBuffer(ibo);
+
+    // second shape
+    m_vao2.reset(VertexArray::create());
+    std::array<float, 28> vertices2{
+        -0.8f, -0.8f, 0.0f, 0.3f, 0.4f, 0.7f, 1.0f,
+        -0.8f, 0.8f, 0.0f, 0.9f, 1.0f, 0.2f, 1.0f,
+        0.8f, 0.8f, 0.0f, 0.2f, 0.1f, 1.0f, 1.0f,
+        0.8f, -0.8f, 0.0f, 0.9f, 0.6f, 1.0f, 1.0f};
+    vbo.reset(VertexBuffer::create(&vertices2[0], sizeof(float) * vertices2.size()));
+    {
+        BufferLayout layout = {
+            {ShaderDataType::Float3, "a_position", false},
+            {ShaderDataType::Float4, "a_color", false},
+        };
+
+        vbo->setLayout(layout);
+    }
+    m_vao2->addVertexBuffer(vbo);
+
+    std::array<std::uint32_t, 6> indices2{0, 1, 2, 2, 3, 0};
+    ibo.reset(IndexBuffer::create(&indices2[0], indices2.size()));
+    m_vao2->addIndexBuffer(ibo);
 }
 
 void App::run()
@@ -101,12 +108,16 @@ void App::run()
     while (m_isRunning)
     {
         // temp, should be replaced after making a renderer
-        glClearColor(0.3f, 0.2f, 0.7f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         m_ShaderProgram->bind();
-        glBindVertexArray(m_vao);
-        glDrawElements(GL_TRIANGLES, m_ibo->getCount(), GL_UNSIGNED_INT, nullptr);
+
+        m_vao2->bind();
+        glDrawElements(GL_TRIANGLES, m_vao2->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+
+        m_vao->bind();
+        glDrawElements(GL_TRIANGLES, m_vao->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 
         for (auto layer : m_layerStack)
         {
