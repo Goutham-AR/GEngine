@@ -29,6 +29,8 @@ add_library(
         graphics/GL/GLContext.cc graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc graphics/GL/GLShader.hh
         graphics/GL/GLBuffers.cc graphics/GL/GLBuffers.hh
+
+        utils/FileIO.cc utils/FileIO.hh
 )
 
 set_target_properties(
