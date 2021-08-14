@@ -20,12 +20,7 @@ public:
     void unbind() const override;
 
 private:
-    std::string readFromFile(std::string_view filePath);
-
-private:
     unsigned int m_handle{};
 };
-
-
 
 }

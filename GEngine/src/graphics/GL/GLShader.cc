@@ -5,6 +5,7 @@
 
 #include <Logger.hh>
 #include <glad/glad.h>
+#include <utils/FileIO.hh>
 
 namespace GE
 {
@@ -13,8 +14,8 @@ GLShader::GLShader(std::string_view vertexPath, std::string_view fragmentPath)
 {
 
     // Read our shaders into the appropriate buffers
-    auto vertexSource = readFromFile(vertexPath);
-    auto fragmentSource = readFromFile(fragmentPath);
+    auto vertexSource = utils::FileIO::readText(vertexPath);
+    auto fragmentSource = utils::FileIO::readText(fragmentPath);
 
     // Create an empty vertex shader handle
     auto vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -137,22 +138,5 @@ void GLShader::unbind() const
 {
     glUseProgram(0);
 }
-
-std::string GLShader::readFromFile(std::string_view filePath)
-{
-    std::ifstream file{filePath.data(), std::ios::in | std::ios::ate};
-    if (file.is_open())
-    {   
-        auto size = file.tellg();
-        std::string content(size, ' ');
-        file.seekg(0, std::ios::beg);
-        file.read(content.data(), size);
-        return content;
-    }
-    ENGINE_LOG_ERROR("Failed To open shader file: {0}", filePath.data());
-    std::exit(1);
-}
-
-
 
 }
