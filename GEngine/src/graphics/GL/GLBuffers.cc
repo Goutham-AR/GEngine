@@ -4,9 +4,6 @@
 namespace GE
 {
 
-
-
-    
 // -------------------------------------------------------
 // ------------------- VertexBuffer -----------------------
 // -------------------------------------------------------
@@ -31,6 +28,16 @@ void GLVertexBuffer::bind() const
 void GLVertexBuffer::unbind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GLVertexBuffer::setLayout(BufferLayout& layout)
+{
+    m_layout = layout;
+}
+
+const BufferLayout& GLVertexBuffer::getLayout() const
+{
+    return m_layout;
 }
 
 // -------------------------------------------------------
@@ -64,7 +71,5 @@ std::uint32_t GLIndexBuffer::getCount() const
 {
     return m_count;
 }
-
-
 
 }

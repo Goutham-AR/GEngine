@@ -62,20 +62,36 @@ App::App()
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 
-    std::array<float, 9> vertices {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
-    };
+    std::array<float, 21> vertices{
+        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+        0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
     m_vbo.reset(VertexBuffer::create(&vertices[0], sizeof(float) * vertices.size()));
     m_vbo->bind();
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-
-    std::array<std::uint32_t, 3> indices {
-        0, 1, 2
+    BufferLayout layout = {
+        {ShaderDataType::Float3, "a_position", false},
+        {ShaderDataType::Float4, "a_color", false},
     };
+
+    m_vbo->setLayout(layout);
+
+    auto index = 0;
+    for (auto& elem : layout)
+    {
+        glEnableVertexAttribArray(index);
+        glVertexAttribPointer(
+            index,
+            elem.getPerVertexCount(),
+            ShaderDataTypeToGLtype(elem.type),
+            elem.isNormalized ? GL_TRUE : GL_FALSE,
+            layout.getStride(),
+            reinterpret_cast<const void*>(elem.offset));
+
+        ++index;
+    }
+
+    std::array<std::uint32_t, 3> indices{0, 1, 2};
     m_ibo.reset(IndexBuffer::create(&indices[0], indices.size()));
     m_ibo->bind();
 }

@@ -6,8 +6,6 @@
 namespace GE
 {
 
-
-        
 // -------------------------------------------------------
 // ------------------- VertexBuffer -----------------------
 // -------------------------------------------------------
@@ -17,14 +15,15 @@ public:
     GLVertexBuffer(float* vertices, std::size_t size);
     ~GLVertexBuffer() override;
 
-
     void bind() const override;
     void unbind() const override;
 
+    void setLayout(BufferLayout& layout) override;
+    const BufferLayout& getLayout() const override;
 
 private:
-    unsigned int m_handle;
-
+    unsigned int m_handle{};
+    BufferLayout m_layout{};
 };
 
 // -------------------------------------------------------
@@ -41,13 +40,9 @@ public:
 
     std::uint32_t getCount() const override;
 
-
 private:
-    unsigned int m_handle;
+    unsigned int m_handle{};
     std::uint32_t m_count;
-
-
 };
-
 
 }
