@@ -18,9 +18,12 @@ public:
 
     void bind() const override;
     void unbind() const override;
+    void setUniform(std::string_view name, const glm::mat4& mat) override;
 
 private:
     unsigned int m_handle{};
+
+    [[nodiscard]] int getUniformLocation(std::string_view name) const;
 };
 
 }

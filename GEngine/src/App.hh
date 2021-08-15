@@ -12,6 +12,7 @@
 #include <graphics/Shader.hh>
 #include <graphics/Buffers.hh>
 #include <graphics/VertexArray.hh>
+#include <graphics/Cameras.hh>
 
 namespace GE
 {
@@ -40,9 +41,11 @@ private:
     static App* appInstance;
 
 private:
-    std::unique_ptr<Shader> m_ShaderProgram;
+    std::shared_ptr<Shader> m_ShaderProgram;
     std::shared_ptr<VertexArray> m_vao;
     std::shared_ptr<VertexArray> m_vao2;
+
+    OrthoGraphicCamera m_camera;
 };
 
 App* createApp();

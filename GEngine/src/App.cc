@@ -16,7 +16,8 @@ App* App::appInstance = nullptr;
 
 App::App()
     : m_imGuiLayer{nullptr},
-      m_layerStack{}
+      m_layerStack{},
+      m_camera{-1.6f, 1.6f, -0.9f, 0.9f}
 {
     GE_ASSERT(!appInstance, "Only one App can exist");
     appInstance = this;
@@ -37,7 +38,21 @@ App::App()
             dispatcher.dispatchEvent<KeyPressedEvent>(
                 [this](KeyPressedEvent& e) -> bool
                 {
-                    // ENGINE_LOG_TRACE("{0}", e.getKeyCode());
+                    switch (e.getKeyCode())
+                    {
+                    case KeyCode::W:
+                    {
+                        auto newY = m_camera.getPosition().y + 0.1;
+                        m_camera.setPosition({m_camera.getPosition().x, newY, 0.0f});
+                        break;
+                    }
+                    case KeyCode::S:
+                    {
+                        auto newY = m_camera.getPosition().y - 0.1;
+                        m_camera.setPosition({m_camera.getPosition().x, newY, 0.0f});
+                        break;
+                    }
+                    }
                     return true;
                 });
 
@@ -106,11 +121,13 @@ void App::run()
 {
     while (m_isRunning)
     {
+
+        // m_camera.setPosition({(m_window->getWidth() - Input::getMousePosX()) / m_window->getWidth(), (m_window->getHeight() - Input::getMousePosY()) / m_window->getHeight(), 0.0f});
+        // m_camera.setRotation(45.0f);
         RenderCommand::clear(glm::vec4{0.1f, 0.1f, 0.1f, 1.0f});
-        Renderer::begin();
-        m_ShaderProgram->bind();
-        Renderer::submit(m_vao2);
-        Renderer::submit(m_vao);
+        Renderer::begin(m_camera);
+        Renderer::submit(m_vao2, m_ShaderProgram);
+        Renderer::submit(m_vao, m_ShaderProgram);
         Renderer::end();
 
         for (auto layer : m_layerStack)

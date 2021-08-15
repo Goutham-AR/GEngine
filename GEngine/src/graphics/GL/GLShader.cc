@@ -3,6 +3,8 @@
 #include <vector>
 #include <fstream>
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include <Logger.hh>
 #include <glad/glad.h>
 #include <utils/FileIO.hh>
@@ -137,6 +139,16 @@ void GLShader::bind() const
 void GLShader::unbind() const
 {
     glUseProgram(0);
+}
+
+void GLShader::setUniform(std::string_view name, const glm::mat4& mat)
+{
+    glProgramUniformMatrix4fv(m_handle, getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+int GLShader::getUniformLocation(std::string_view name) const
+{
+    return glGetUniformLocation(m_handle, name.data());
 }
 
 }
