@@ -9,7 +9,7 @@ namespace GE
 {
 
 // static class
-class Input
+class GE_PUBLIC Input
 {
 public:
     Input() = delete;

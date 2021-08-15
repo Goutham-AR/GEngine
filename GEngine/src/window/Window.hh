@@ -10,11 +10,10 @@
 
 struct GLFWwindow;
 
-
 namespace GE
 {
 
-    class GraphicsContext;
+class GraphicsContext;
 
 struct WindowProps final
 {
@@ -40,7 +39,7 @@ public:
     Window& operator=(const Window&) = delete;
 
     [[nodiscard]] unsigned int getWidth() const { return m_winData.width; };
-    [[nodiscard]] unsigned int getheight() const { return m_winData.height; };
+    [[nodiscard]] unsigned int getHeight() const { return m_winData.height; };
     [[nodiscard]] GLFWwindow* getWinHandle() const { return m_window; }
 
     void onUpdate();

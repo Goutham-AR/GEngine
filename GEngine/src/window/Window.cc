@@ -182,7 +182,7 @@ void Window::init()
 
             winData->eventCallback(event);
         });
-}   // Window::init()
+} // Window::init()
 
 void Window::setEventCallback(const EventCallbackFn& callback)
 {
