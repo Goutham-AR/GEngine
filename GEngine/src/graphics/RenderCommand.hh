@@ -14,7 +14,7 @@ public:
     {
         s_rendererAPI->clear(color);
     }
-    static void drawIndexed(const std::shared_ptr<VertexArray>& vao)
+    static void drawIndexed(const Sptr<VertexArray>& vao)
     {
         s_rendererAPI->drawIndexed(vao);
     }

@@ -22,7 +22,7 @@ void GLVertexArray::unbind() const
     glBindVertexArray(0);
 }
 
-void GLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)
+void GLVertexArray::addVertexBuffer(const Sptr<VertexBuffer>& vbo)
 {
     this->bind();
     vbo->bind();
@@ -45,7 +45,7 @@ void GLVertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)
     m_vbos.push_back(vbo);
     this->unbind();
 }
-void GLVertexArray::addIndexBuffer(const std::shared_ptr<IndexBuffer>& ibo)
+void GLVertexArray::addIndexBuffer(const Sptr<IndexBuffer>& ibo)
 {
     m_ibo = ibo;
     this->bind();

@@ -10,7 +10,6 @@ int main(int argc, char** argv)
     ENGINE_LOG_INFO("Engine Logger Initialized");
     LOG_INFO("Client Logger Initialized");
 
-    auto* app = GE::createApp();
+    GE::Uptr<GE::App> app{GE::createApp()};
     app->run();
-    delete app;
 }

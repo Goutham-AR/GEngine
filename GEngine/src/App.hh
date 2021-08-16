@@ -28,7 +28,7 @@ public:
     [[nodiscard]] Window& getWindow() const { return *m_window; }
 
 private:
-    std::unique_ptr<Window> m_window;
+    Uptr<Window> m_window;
     ImGuiLayer* m_imGuiLayer;
     LayerStack m_layerStack;
     bool m_isRunning = true;

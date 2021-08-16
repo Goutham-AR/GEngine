@@ -16,22 +16,22 @@ public:
     void bind() const override;
     void unbind() const override;
 
-    void addVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo) override;
-    void addIndexBuffer(const std::shared_ptr<IndexBuffer>& ibo) override;
+    void addVertexBuffer(const Sptr<VertexBuffer>& vbo) override;
+    void addIndexBuffer(const Sptr<IndexBuffer>& ibo) override;
 
-    [[nodiscard]] const std::shared_ptr<IndexBuffer>& getIndexBuffer() const override
+    [[nodiscard]] const Sptr<IndexBuffer>& getIndexBuffer() const override
     {
         return m_ibo;
     }
-    [[nodiscard]] const std::vector<std::shared_ptr<VertexBuffer>>& getVertexBuffer() const override
+    [[nodiscard]] const std::vector<Sptr<VertexBuffer>>& getVertexBuffer() const override
     {
         return m_vbos;
     }
 
 private:
     unsigned int m_handle{};
-    std::vector<std::shared_ptr<VertexBuffer>> m_vbos{};
-    std::shared_ptr<IndexBuffer> m_ibo{};
+    std::vector<Sptr<VertexBuffer>> m_vbos{};
+    Sptr<IndexBuffer> m_ibo{};
 };
 
 }

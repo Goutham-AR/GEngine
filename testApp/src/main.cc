@@ -1,4 +1,7 @@
+#include "glm/gtc/type_ptr.hpp"
 #include <GE.hh>
+
+#include <graphics/GL/GLShader.hh> // temp
 
 #include <array>
 
@@ -24,7 +27,7 @@ public:
             -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
             0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
             0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
-        auto vbo = std::shared_ptr<GE::VertexBuffer>(GE::VertexBuffer::create(&vertices[0], sizeof(float) * vertices.size()));
+        auto vbo = GE::Sptr<GE::VertexBuffer>(GE::VertexBuffer::create(&vertices[0], sizeof(float) * vertices.size()));
         {
             GE::BufferLayout layout = {
                 {GE::ShaderDataType::Float3, "a_position", false},
@@ -36,7 +39,7 @@ public:
         m_vao->addVertexBuffer(vbo);
 
         std::array<std::uint32_t, 3> indices{0, 1, 2};
-        auto ibo = std::shared_ptr<GE::IndexBuffer>(GE::IndexBuffer::create(&indices[0], indices.size()));
+        auto ibo = GE::Sptr<GE::IndexBuffer>(GE::IndexBuffer::create(&indices[0], indices.size()));
         m_vao->addIndexBuffer(ibo);
 
         // second shape
@@ -71,6 +74,55 @@ public:
 
         auto deltaTime = timeStep.getSeconds();
 
+        handleInput(deltaTime);
+
+        GE::RenderCommand::clear(glm::vec4{0.1f, 0.1f, 0.1f, 1.0f});
+        m_camera.setPosition(m_camPos);
+        m_camera.setRotation(m_camRot * (180 / 3.14));
+        GE::Renderer::begin(m_camera);
+
+        static auto scaleVec = glm::vec3{0.1f, 0.1f, 0.1f};
+        static auto scale = glm::scale(glm::mat4{1.0f}, scaleVec);
+
+        std::dynamic_pointer_cast<GE::GLShader>(m_ShaderProgram)->setUniform("u_color", m_color);
+
+        for (auto i = 0; i < 10; ++i)
+        {
+            for (auto j = 0; j < 10; ++j)
+            {
+                auto transform = glm::translate(glm::mat4{1.0f}, glm::vec3{i * 0.11, j * 0.11f, 0.2f}) * scale;
+                GE::Renderer::submit(m_vao2, m_ShaderProgram, transform);
+            }
+        }
+        // GE::Renderer::submit(m_vao, m_ShaderProgram);
+        GE::Renderer::end();
+    }
+
+    void onEvent(GE::Event& event) override
+    {
+    }
+
+    void onImGuiRender() override
+    {
+        ImGui::Begin("settings");
+        ImGui::ColorEdit4("Square Color", glm::value_ptr(m_color));
+        ImGui::SliderAngle("Camera Rotation", &m_camRot);
+        ImGui::SliderFloat3("Camera Position", glm::value_ptr(m_camPos), -1.6f, 1.6f);
+        ImGui::End();
+    }
+
+private:
+    GE::Sptr<GE::Shader> m_ShaderProgram;
+    GE::Sptr<GE::VertexArray> m_vao;
+    GE::Sptr<GE::VertexArray> m_vao2;
+    GE::OrthoGraphicCamera m_camera;
+    glm::vec3 m_camPos;
+    float m_camRot{};
+    glm::vec4 m_color{0.2f, 0.6f, 0.9f, 1.0f};
+
+private:
+    inline void handleInput(float deltaTime)
+    {
         if (GE::Input::isKeyPressed(GE::KeyCode::W) || GE::Input::isKeyPressed(GE::KeyCode::UpArrow))
         {
             m_camPos.y -= 1.0f * deltaTime;
@@ -89,35 +141,7 @@ public:
         {
             m_camPos.x -= 1.0f * deltaTime;
         }
-        GE::RenderCommand::clear(glm::vec4{0.1f, 0.1f, 0.1f, 1.0f});
-        m_camera.setPosition(m_camPos);
-        // m_camera.setRotation(45.0f);
-        GE::Renderer::begin(m_camera);
-
-        auto scale = glm::scale(glm::mat4{1.0f}, glm::vec3{0.1f, 0.1f, 0.1f});
-
-        for (auto i = 0; i < 10; ++i)
-        {
-            for (auto j = 0; j < 10; ++j)
-            {
-                auto transform = glm::translate(glm::mat4{1.0f}, glm::vec3{i * 0.11, j * 0.11f, 0.2f}) * scale;
-                GE::Renderer::submit(m_vao2, m_ShaderProgram, transform);
-            }
-        }
-        // GE::Renderer::submit(m_vao, m_ShaderProgram);
-        GE::Renderer::end();
     }
-
-    void onEvent(GE::Event& event) override
-    {
-    }
-
-private:
-    std::shared_ptr<GE::Shader> m_ShaderProgram;
-    std::shared_ptr<GE::VertexArray> m_vao;
-    std::shared_ptr<GE::VertexArray> m_vao2;
-    GE::OrthoGraphicCamera m_camera;
-    glm::vec3 m_camPos;
 };
 
 class TestApp : public GE::App
@@ -125,7 +149,7 @@ class TestApp : public GE::App
 public:
     TestApp()
     {
-        pushLayer(new TestLayer{});
+        pushOverlay(new TestLayer{});
     }
     ~TestApp() override = default;
 };

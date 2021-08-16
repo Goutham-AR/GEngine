@@ -3,8 +3,9 @@
 
 namespace GE::utils
 {
-std::shared_ptr<spdlog::logger> Logger::m_engineLogger;
-std::shared_ptr<spdlog::logger> Logger::m_clientLogger;
+
+Sptr<spdlog::logger> Logger::m_engineLogger;
+Sptr<spdlog::logger> Logger::m_clientLogger;
 
 void Logger::init()
 {

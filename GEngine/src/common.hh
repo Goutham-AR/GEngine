@@ -30,3 +30,17 @@
 #else
 #define GE_ASSERT(x, ...)
 #endif
+
+#include <memory>
+
+namespace GE
+{
+template <typename T>
+using Sptr = std::shared_ptr<T>;
+
+template <typename T>
+using Uptr = std::unique_ptr<T>;
+}
+
+// template <typename T>
+// using Wptr = std::weak_ptr<T>;

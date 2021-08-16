@@ -17,12 +17,12 @@ class GE_PUBLIC Logger
 public:
     static void init();
 
-    inline static std::shared_ptr<spdlog::logger>& getEngineLogger() { return m_engineLogger; }
-    inline static std::shared_ptr<spdlog::logger>& getClientLogger() { return m_clientLogger; }
+    inline static Sptr<spdlog::logger>& getEngineLogger() { return m_engineLogger; }
+    inline static Sptr<spdlog::logger>& getClientLogger() { return m_clientLogger; }
 
 private:
-    static std::shared_ptr<spdlog::logger> m_engineLogger;
-    static std::shared_ptr<spdlog::logger> m_clientLogger;
+    static Sptr<spdlog::logger> m_engineLogger;
+    static Sptr<spdlog::logger> m_clientLogger;
 };
 }
 

@@ -1,5 +1,7 @@
 #include "Renderer.hh"
 
+#include <graphics/GL/GLShader.hh>
+
 namespace GE
 {
 
@@ -12,10 +14,10 @@ void Renderer::begin(OrthoGraphicCamera& camera)
 void Renderer::end()
 {
 }
-void Renderer::submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Shader>& shader, const glm::mat4& transformMat)
+void Renderer::submit(const Sptr<VertexArray>& vao, const Sptr<Shader>& shader, const glm::mat4& transformMat)
 {
-    shader->setUniform("u_viewProjMat", s_camera->getViewProjectionMat());
-    shader->setUniform("u_modelMat", transformMat);
+    std::dynamic_pointer_cast<GLShader>(shader)->setUniform("u_viewProjMat", s_camera->getViewProjectionMat());
+    std::dynamic_pointer_cast<GLShader>(shader)->setUniform("u_modelMat", transformMat);
     shader->bind();
     vao->bind();
     RenderCommand::drawIndexed(vao);
