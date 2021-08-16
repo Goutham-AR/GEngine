@@ -1,6 +1,6 @@
 add_library(
     ge
-    SHARED
+    # SHARED
         App.cc    App.hh
 
         Time.hh
@@ -72,5 +72,5 @@ target_compile_definitions(
     PUBLIC
         $<$<CONFIG:Debug>:GE_DEBUG>
         GLFW_INCLUDE_NONE
-        GE_BUILD_DLL
+        # GE_BUILD_DLL
 )
