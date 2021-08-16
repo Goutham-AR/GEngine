@@ -5,7 +5,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include <Logger.hh>
+#include <utils/Logger.hh>
 #include <glad/glad.h>
 #include <utils/FileIO.hh>
 

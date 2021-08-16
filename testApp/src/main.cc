@@ -42,10 +42,10 @@ public:
         // second shape
         m_vao2.reset(GE::VertexArray::create());
         std::array<float, 28> vertices2{
-            -0.8f, -0.8f, 0.0f, 0.3f, 0.4f, 0.7f, 1.0f,
-            -0.8f, 0.8f, 0.0f, 0.9f, 1.0f, 0.2f, 1.0f,
-            0.8f, 0.8f, 0.0f, 0.2f, 0.1f, 1.0f, 1.0f,
-            0.8f, -0.8f, 0.0f, 0.9f, 0.6f, 1.0f, 1.0f};
+            -0.5f, -0.5f, 0.0f, 0.3f, 0.4f, 0.7f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 0.9f, 1.0f, 0.2f, 1.0f,
+            0.5f, 0.5f, 0.0f, 0.2f, 0.1f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.0f, 0.9f, 0.6f, 1.0f, 1.0f};
         vbo.reset(GE::VertexBuffer::create(&vertices2[0], sizeof(float) * vertices2.size()));
         {
             GE::BufferLayout layout = {
@@ -65,33 +65,46 @@ public:
     {
     }
 
-    void onUpdate() override
+    void onUpdate(GE::TimeStep& timeStep) override
     {
+        // LOG_TRACE("Delta Time: {0}s ({1}ms)", timeStep.getSeconds(), timeStep.getMilliSeconds());
+
+        auto deltaTime = timeStep.getSeconds();
+
         if (GE::Input::isKeyPressed(GE::KeyCode::W) || GE::Input::isKeyPressed(GE::KeyCode::UpArrow))
         {
-            m_camPos.y -= 0.05f;
+            m_camPos.y -= 1.0f * deltaTime;
         }
-
         else if (GE::Input::isKeyPressed(GE::KeyCode::S) || GE::Input::isKeyPressed(GE::KeyCode::DownArrow))
         {
-            m_camPos.y += 0.05f;
+            m_camPos.y += 1.0f * deltaTime;
         }
 
         if (GE::Input::isKeyPressed(GE::KeyCode::A) || GE::Input::isKeyPressed(GE::KeyCode::LeftArrow))
         {
-            m_camPos.x += 0.05f;
+            m_camPos.x += 1.0f * deltaTime;
         }
 
         else if (GE::Input::isKeyPressed(GE::KeyCode::D) || GE::Input::isKeyPressed(GE::KeyCode::RightArrow))
         {
-            m_camPos.x -= 0.05f;
+            m_camPos.x -= 1.0f * deltaTime;
         }
         GE::RenderCommand::clear(glm::vec4{0.1f, 0.1f, 0.1f, 1.0f});
         m_camera.setPosition(m_camPos);
         // m_camera.setRotation(45.0f);
         GE::Renderer::begin(m_camera);
-        GE::Renderer::submit(m_vao2, m_ShaderProgram);
-        GE::Renderer::submit(m_vao, m_ShaderProgram);
+
+        auto scale = glm::scale(glm::mat4{1.0f}, glm::vec3{0.1f, 0.1f, 0.1f});
+
+        for (auto i = 0; i < 10; ++i)
+        {
+            for (auto j = 0; j < 10; ++j)
+            {
+                auto transform = glm::translate(glm::mat4{1.0f}, glm::vec3{i * 0.11, j * 0.11f, 0.2f}) * scale;
+                GE::Renderer::submit(m_vao2, m_ShaderProgram, transform);
+            }
+        }
+        // GE::Renderer::submit(m_vao, m_ShaderProgram);
         GE::Renderer::end();
     }
 

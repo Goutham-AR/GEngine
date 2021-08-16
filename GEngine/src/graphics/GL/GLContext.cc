@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-#include <Logger.hh>
+#include <utils/Logger.hh>
 
 GE::GLContext::GLContext(GLFWwindow* winHandle)
     : m_winHandle{winHandle}

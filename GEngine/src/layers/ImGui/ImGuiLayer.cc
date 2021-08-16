@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "App.hh"
-#include "Logger.hh"
+#include "utils/Logger.hh"
 #include "events/Event.hh"
 #include "events/MouseEvent.hh"
 #include "events/KeyEvent.hh"
@@ -53,7 +53,7 @@ void ImGuiLayer::onDetach()
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 }
-void ImGuiLayer::onUpdate()
+void ImGuiLayer::onUpdate(TimeStep& timeStep)
 {
 }
 

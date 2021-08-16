@@ -2,6 +2,7 @@
 
 #include <common.hh>
 #include <events/Event.hh>
+#include <Time.hh>
 
 #include <string>
 
@@ -18,7 +19,7 @@ public:
 
     virtual void onAttach(){};
     virtual void onDetach(){};
-    virtual void onUpdate(){};
+    virtual void onUpdate(TimeStep& timeStep){};
     virtual void onEvent(Event& event){};
     virtual void onImGuiRender(){};
 

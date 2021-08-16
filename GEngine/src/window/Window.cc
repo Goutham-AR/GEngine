@@ -4,7 +4,7 @@
 #include "events/KeyEvent.hh"
 #include "events/MouseEvent.hh"
 
-#include <Logger.hh>
+#include <utils/Logger.hh>
 #include <graphics/GraphicsContext.hh>
 #include <graphics/GL/GLContext.hh>
 

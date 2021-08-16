@@ -2,7 +2,8 @@ add_library(
     ge
     SHARED
         App.cc    App.hh
-        Logger.cc Logger.hh
+
+        Time.hh
         common.hh geMain.hh
         GE.hh
 
@@ -36,6 +37,8 @@ add_library(
         graphics/GL/GLRendererAPI.cc  graphics/GL/GLRendererAPI.hh
 
         utils/FileIO.cc               utils/FileIO.hh
+        utils/Logger.cc utils/Logger.hh
+
 )
 
 set_target_properties(

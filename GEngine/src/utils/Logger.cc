@@ -1,7 +1,7 @@
-#include "Logger.hh"
+#include "utils/Logger.hh"
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-namespace GE
+namespace GE::utils
 {
 std::shared_ptr<spdlog::logger> Logger::m_engineLogger;
 std::shared_ptr<spdlog::logger> Logger::m_clientLogger;

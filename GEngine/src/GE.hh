@@ -4,7 +4,8 @@
 #include "geMain.hh"
 
 #include "App.hh"
-#include "Logger.hh"
+#include "utils/Logger.hh"
+#include "Time.hh"
 
 #include "layers/Layer.hh"
 #include "layers/ImGui/ImGuiLayer.hh"

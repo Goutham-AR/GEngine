@@ -1,6 +1,6 @@
 #include "FileIO.hh"
 
-#include "Logger.hh"
+#include "utils/Logger.hh"
 #include <fstream>
 
 namespace GE::utils

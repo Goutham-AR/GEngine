@@ -12,9 +12,10 @@ void Renderer::begin(OrthoGraphicCamera& camera)
 void Renderer::end()
 {
 }
-void Renderer::submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Shader>& shader)
+void Renderer::submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Shader>& shader, const glm::mat4& transformMat)
 {
     shader->setUniform("u_viewProjMat", s_camera->getViewProjectionMat());
+    shader->setUniform("u_modelMat", transformMat);
     shader->bind();
     vao->bind();
     RenderCommand::drawIndexed(vao);
