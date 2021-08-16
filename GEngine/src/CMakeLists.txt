@@ -29,12 +29,14 @@ add_library(
         graphics/RendererAPI.cc       graphics/RendererAPI.hh
         graphics/RenderCommand.cc     graphics/RenderCommand.hh
         graphics/Cameras.cc            graphics/Cameras.hh
+        graphics/Texture.cc            graphics/Texture.hh
 
         graphics/GL/GLContext.cc      graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc       graphics/GL/GLShader.hh
         graphics/GL/GLBuffers.cc      graphics/GL/GLBuffers.hh
         graphics/GL/GLVertexArray.cc  graphics/GL/GLVertexArray.hh
         graphics/GL/GLRendererAPI.cc  graphics/GL/GLRendererAPI.hh
+        graphics/GL/GLTexture.cc  graphics/GL/GLTexture.hh
 
         utils/FileIO.cc               utils/FileIO.hh
         utils/Logger.cc utils/Logger.hh
@@ -55,6 +57,7 @@ target_link_libraries(
         glad
         glm
         spdlog
+        stb_image
         
 )
 
