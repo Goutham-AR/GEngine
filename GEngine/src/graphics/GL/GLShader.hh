@@ -18,7 +18,9 @@ public:
 
     void bind() const override;
     void unbind() const override;
-    void setUniform(std::string_view name, const glm::mat4& mat) override;
+    void setUniform(std::string_view name, const glm::mat4& mat);
+    void setUniform(std::string_view name, const glm::vec4& vec);
+    void setUniform(std::string_view name, const glm::vec3& vec);
 
 private:
     unsigned int m_handle{};

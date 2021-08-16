@@ -146,6 +146,15 @@ void GLShader::setUniform(std::string_view name, const glm::mat4& mat)
     glProgramUniformMatrix4fv(m_handle, getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
 }
 
+void GLShader::setUniform(std::string_view name, const glm::vec4& vec)
+{
+    glProgramUniform4fv(m_handle, getUniformLocation(name), 1, glm::value_ptr(vec));
+}
+void GLShader::setUniform(std::string_view name, const glm::vec3& vec)
+{
+    glProgramUniform3fv(m_handle, getUniformLocation(name), 1, glm::value_ptr(vec));
+}
+
 int GLShader::getUniformLocation(std::string_view name) const
 {
     return glGetUniformLocation(m_handle, name.data());
