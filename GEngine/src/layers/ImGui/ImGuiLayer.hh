@@ -18,8 +18,8 @@ public:
 
     void onImGuiRender() override;
 
-    void begin();
-    void end();
+    static void begin();
+    static void end();
 
 private:
     float m_time{};

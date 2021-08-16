@@ -68,12 +68,12 @@ void App::run()
             layer->onUpdate(timeStep);
         }
 
-        m_imGuiLayer->begin();
+        ImGuiLayer::begin();
         for (auto layer : m_layerStack)
         {
             layer->onImGuiRender();
         }
-        m_imGuiLayer->end();
+        ImGuiLayer::end();
 
         m_window->onUpdate();
     }
