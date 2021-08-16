@@ -21,6 +21,7 @@ public:
     void setUniform(std::string_view name, const glm::mat4& mat);
     void setUniform(std::string_view name, const glm::vec4& vec);
     void setUniform(std::string_view name, const glm::vec3& vec);
+    void setUniform(std::string_view name, int val);
 
 private:
     unsigned int m_handle{};

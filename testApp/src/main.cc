@@ -19,19 +19,20 @@ public:
     {
 
         m_ShaderProgram.reset(GE::Shader::create("assets/vertex.glsl", "assets/fragment.glsl"));
+        m_tex2D = GE::Texture2D::create("assets/Textures/brickWall1.jpg");
+        m_texShaderProgram.reset(GE::Shader::create("assets/texShader.vert", "assets/texShader.frag"));
 
         // Temporary Rendering code
         m_vao.reset(GE::VertexArray::create());
 
-        std::array<float, 21> vertices{
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-            0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
+        std::array<float, 9> vertices{
+            -0.5f, -0.5f, 0.0f,
+            0.5f, -0.5f, 0.0f,
+            0.0f, 0.5f, 0.0f};
         auto vbo = GE::Sptr<GE::VertexBuffer>(GE::VertexBuffer::create(&vertices[0], sizeof(float) * vertices.size()));
         {
             GE::BufferLayout layout = {
                 {GE::ShaderDataType::Float3, "a_position", false},
-                {GE::ShaderDataType::Float4, "a_color", false},
             };
 
             vbo->setLayout(layout);
@@ -44,16 +45,16 @@ public:
 
         // second shape
         m_vao2.reset(GE::VertexArray::create());
-        std::array<float, 28> vertices2{
-            -0.5f, -0.5f, 0.0f, 0.3f, 0.4f, 0.7f, 1.0f,
-            -0.5f, 0.5f, 0.0f, 0.9f, 1.0f, 0.2f, 1.0f,
-            0.5f, 0.5f, 0.0f, 0.2f, 0.1f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 0.9f, 0.6f, 1.0f, 1.0f};
+        std::array<float, 20> vertices2{
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
         vbo.reset(GE::VertexBuffer::create(&vertices2[0], sizeof(float) * vertices2.size()));
         {
             GE::BufferLayout layout = {
                 {GE::ShaderDataType::Float3, "a_position", false},
-                {GE::ShaderDataType::Float4, "a_color", false},
+                {GE::ShaderDataType::Float2, "a_texCoord", false},
             };
 
             vbo->setLayout(layout);
@@ -94,6 +95,10 @@ public:
                 GE::Renderer::submit(m_vao2, m_ShaderProgram, transform);
             }
         }
+        m_tex2D->bind(0);
+        std::dynamic_pointer_cast<GE::GLShader>(m_texShaderProgram)->setUniform("u_texture", 0);
+        GE::Renderer::submit(m_vao2, m_texShaderProgram);
+
         // GE::Renderer::submit(m_vao, m_ShaderProgram);
         GE::Renderer::end();
     }
@@ -113,6 +118,8 @@ public:
 
 private:
     GE::Sptr<GE::Shader> m_ShaderProgram;
+    GE::Sptr<GE::Shader> m_texShaderProgram;
+    GE::Sptr<GE::Texture2D> m_tex2D;
     GE::Sptr<GE::VertexArray> m_vao;
     GE::Sptr<GE::VertexArray> m_vao2;
     GE::OrthoGraphicCamera m_camera;

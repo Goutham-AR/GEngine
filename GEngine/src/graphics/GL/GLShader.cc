@@ -159,5 +159,9 @@ int GLShader::getUniformLocation(std::string_view name) const
 {
     return glGetUniformLocation(m_handle, name.data());
 }
+void GLShader::setUniform(std::string_view name, int val)
+{
+    glProgramUniform1i(m_handle, getUniformLocation(name), val);
+}
 
 }
