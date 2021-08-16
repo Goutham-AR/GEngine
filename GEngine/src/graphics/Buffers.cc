@@ -5,7 +5,7 @@
 namespace GE
 {
 
-inline std::uint32_t ShaderDataTypeSize(ShaderDataType type)
+std::uint32_t ShaderDataTypeSize(ShaderDataType type)
 {
     switch (type)
     {
@@ -35,7 +35,7 @@ inline std::uint32_t ShaderDataTypeSize(ShaderDataType type)
 
     GE_ASSERT(false, "Unreachable Code");
 }
-inline GLenum ShaderDataTypeToGLtype(ShaderDataType type)
+GLenum ShaderDataTypeToGLtype(ShaderDataType type)
 {
     switch (type)
     {

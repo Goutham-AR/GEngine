@@ -28,7 +28,7 @@ enum class ShaderDataType
 };
 
 // name and accessibility should be changed
-std::uint32_t ShaderDataTypeSize(ShaderDataType type);
+GE_PUBLIC std::uint32_t ShaderDataTypeSize(ShaderDataType type);
 GE_PUBLIC GLenum ShaderDataTypeToGLtype(ShaderDataType type);
 
 struct GE_PUBLIC BufferElement
