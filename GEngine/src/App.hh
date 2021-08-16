@@ -32,7 +32,9 @@ private:
     ImGuiLayer* m_imGuiLayer;
     LayerStack m_layerStack;
     bool m_isRunning = true;
+    float m_lastFrameTime = 0.0f;
 
+private:
     static App* appInstance;
 };
 

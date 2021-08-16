@@ -2,11 +2,12 @@
 
 #include <array>
 
-#include <Logger.hh>
+#include <utils/Logger.hh>
 #include <window/Input.hh>
 #include <window/KeyCode.hh>
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
+#include <Time.hh>
 
 namespace GE
 {
@@ -58,9 +59,13 @@ void App::run()
 {
     while (m_isRunning)
     {
+        float time = glfwGetTime();
+        TimeStep timeStep{time - m_lastFrameTime};
+        m_lastFrameTime = time;
+
         for (auto layer : m_layerStack)
         {
-            layer->onUpdate();
+            layer->onUpdate(timeStep);
         }
 
         m_imGuiLayer->begin();
