@@ -318,3 +318,9 @@ if(SPDLOG_INSTALL)
     # ---------------------------------------------------------------------------------------
     include(cmake/spdlogCPack.cmake)
 endif()
+
+
+# added by me
+if (UNIX AND NOT APPLE)
+set_target_properties(spdlog PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif()
