@@ -13,14 +13,11 @@ public:
           m_camera{-1.6f, 1.6f, -0.9f, 0.9f},
           m_camPos{0.0f}
     {
-    }
 
-    void onAttach() override
-    {
-
-        m_ShaderProgram.reset(GE::Shader::create("assets/vertex.glsl", "assets/fragment.glsl"));
+        m_ShaderProgram.reset(GE::Shader::create("assets/Shaders/vertex.glsl", "assets/Shaders/fragment.glsl"));
+        m_texShaderProgram.reset(GE::Shader::create("assets/Shaders/texShader.vert", "assets/Shaders/texShader.frag"));
         m_tex2D = GE::Texture2D::create("assets/Textures/brickWall1.jpg");
-        m_texShaderProgram.reset(GE::Shader::create("assets/texShader.vert", "assets/texShader.frag"));
+        m_transparentTex = GE::Texture2D::create("assets/Textures/ChernoLogo.png");
 
         // Temporary Rendering code
         m_vao.reset(GE::VertexArray::create());
@@ -65,14 +62,16 @@ public:
         ibo.reset(GE::IndexBuffer::create(&indices2[0], indices2.size()));
         m_vao2->addIndexBuffer(ibo);
     }
+
+    void onAttach() override
+    {
+    }
     void onDetach() override
     {
     }
 
     void onUpdate(GE::TimeStep& timeStep) override
     {
-        // LOG_TRACE("Delta Time: {0}s ({1}ms)", timeStep.getSeconds(), timeStep.getMilliSeconds());
-
         auto deltaTime = timeStep.getSeconds();
 
         handleInput(deltaTime);
@@ -95,8 +94,10 @@ public:
                 GE::Renderer::submit(m_vao2, m_ShaderProgram, transform);
             }
         }
-        m_tex2D->bind(0);
         std::dynamic_pointer_cast<GE::GLShader>(m_texShaderProgram)->setUniform("u_texture", 0);
+        m_tex2D->bind(0);
+        GE::Renderer::submit(m_vao2, m_texShaderProgram);
+        m_transparentTex->bind(0);
         GE::Renderer::submit(m_vao2, m_texShaderProgram);
 
         // GE::Renderer::submit(m_vao, m_ShaderProgram);
@@ -119,7 +120,7 @@ public:
 private:
     GE::Sptr<GE::Shader> m_ShaderProgram;
     GE::Sptr<GE::Shader> m_texShaderProgram;
-    GE::Sptr<GE::Texture2D> m_tex2D;
+    GE::Sptr<GE::Texture2D> m_tex2D, m_transparentTex;
     GE::Sptr<GE::VertexArray> m_vao;
     GE::Sptr<GE::VertexArray> m_vao2;
     GE::OrthoGraphicCamera m_camera;
