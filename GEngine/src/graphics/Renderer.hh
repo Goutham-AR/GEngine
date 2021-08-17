@@ -16,6 +16,7 @@ public:
     Renderer() = default;
     virtual ~Renderer() = default;
 
+    static void init();
     static void begin(OrthoGraphicCamera& camera);
     static void end();
 

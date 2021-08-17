@@ -7,6 +7,11 @@ namespace GE
 
 OrthoGraphicCamera* Renderer::s_camera = nullptr;
 
+void Renderer::init()
+{
+    RenderCommand::init();
+}
+
 void Renderer::begin(OrthoGraphicCamera& camera)
 {
     s_camera = new OrthoGraphicCamera{camera};
