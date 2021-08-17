@@ -19,7 +19,7 @@ public:
 
     virtual void onAttach(){};
     virtual void onDetach(){};
-    virtual void onUpdate(TimeStep& timeStep){};
+    virtual void onUpdate(TimeStep& deltaTime){};
     virtual void onEvent(Event& event){};
     virtual void onImGuiRender(){};
 

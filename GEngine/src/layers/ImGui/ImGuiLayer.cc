@@ -53,7 +53,7 @@ void ImGuiLayer::onDetach()
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 }
-void ImGuiLayer::onUpdate(TimeStep& timeStep)
+void ImGuiLayer::onUpdate(TimeStep& deltaTime)
 {
 }
 

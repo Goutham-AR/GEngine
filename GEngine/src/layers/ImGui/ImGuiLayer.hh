@@ -14,7 +14,7 @@ public:
 
     void onAttach() override;
     void onDetach() override;
-    void onUpdate(TimeStep& timeStep) override;
+    void onUpdate(TimeStep& deltaTime) override;
 
     void onImGuiRender() override;
 
