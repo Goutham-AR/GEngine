@@ -8,6 +8,7 @@
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
 #include <Time.hh>
+#include <graphics/Renderer.hh>
 
 namespace GE
 {
@@ -51,6 +52,8 @@ App::App()
         } // lambda end
     );    // setEventCallback end
 
+    Renderer::init();
+
     m_imGuiLayer = new ImGuiLayer{};
     pushOverlay(m_imGuiLayer);
 }
@@ -59,21 +62,21 @@ void App::run()
 {
     while (m_isRunning)
     {
-        float time = glfwGetTime();
-        TimeStep timeStep{time - m_lastFrameTime};
-        m_lastFrameTime = time;
+        auto deltaTime = calculateDeltaTime();
 
         for (auto layer : m_layerStack)
         {
-            layer->onUpdate(timeStep);
+            layer->onUpdate(deltaTime);
         }
 
+#if defined(GE_DEBUG)
         ImGuiLayer::begin();
         for (auto layer : m_layerStack)
         {
             layer->onImGuiRender();
         }
         ImGuiLayer::end();
+#endif
 
         m_window->onUpdate();
     }
@@ -95,4 +98,12 @@ void App::onEvent(Event& e)
 {
 }
 
+// Private funcs
+TimeStep App::calculateDeltaTime()
+{
+    auto time = static_cast<float>(glfwGetTime());
+    TimeStep timeStep{time - m_lastFrameTime};
+    m_lastFrameTime = time;
+    return timeStep;
+}
 }

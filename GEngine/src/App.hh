@@ -36,6 +36,9 @@ private:
 
 private:
     static App* appInstance;
+
+private:
+    TimeStep calculateDeltaTime();
 };
 
 App* createApp();
