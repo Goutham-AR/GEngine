@@ -9,3 +9,8 @@ target_include_directories(
     PUBLIC
         include
 )
+
+# added by me
+if (UNIX AND NOT APPLE)
+set_target_properties(stb_image PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif()
