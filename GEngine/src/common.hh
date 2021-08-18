@@ -16,6 +16,12 @@
 
 #define BIT(x) (1 << x)
 
+#if defined(_WIN32)
+#define DEBUG_BREAK __debugbreak()
+#elif defined(__linux__)
+#define DEBUG_BREAK std::exit(1)
+#endif
+
 // Assertion Macros
 #if defined(GE_DEBUG)
 #define GE_ASSERT(x, ...)                                                                          \
@@ -24,7 +30,7 @@
         {                                                                                          \
             ENGINE_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__);                                \
             ENGINE_LOG_ERROR("Line: {0}, File: {1}, Function: {2}", __LINE__, __FILE__, __func__); \
-            std::exit(1);                                                                          \
+            DEBUG_BREAK;                                                                           \
         }                                                                                          \
     }
 #else
