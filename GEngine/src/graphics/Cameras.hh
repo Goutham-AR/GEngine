@@ -13,6 +13,11 @@ class GE_PUBLIC OrthoGraphicCamera
 public:
     OrthoGraphicCamera(float left, float right, float bottom, float top);
 
+    void setProjection(float left, float right, float bottom, float top)
+    {
+        m_projMat = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+        m_vpMat = m_projMat * m_viewMat;
+    }
     OrthoGraphicCamera(const OrthoGraphicCamera&) = default;
     OrthoGraphicCamera& operator=(const OrthoGraphicCamera&) = default;
 
@@ -54,5 +59,4 @@ private:
         m_vpMat = m_projMat * m_viewMat;
     }
 };
-
 }

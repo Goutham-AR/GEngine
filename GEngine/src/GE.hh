@@ -22,6 +22,7 @@
 #include "graphics/VertexArray.hh"
 #include "graphics/Buffers.hh"
 #include "graphics/Cameras.hh"
+#include "graphics/CameraControllers.hh"
 #include "graphics/Texture.hh"
 
 #include <imgui.h>

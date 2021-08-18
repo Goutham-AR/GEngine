@@ -12,7 +12,7 @@ void Renderer::init()
     RenderCommand::init();
 }
 
-void Renderer::begin(OrthoGraphicCamera& camera)
+void Renderer::begin(const OrthoGraphicCamera& camera)
 {
     s_camera = new OrthoGraphicCamera{camera};
 }

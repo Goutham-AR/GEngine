@@ -17,7 +17,7 @@ public:
     virtual ~Renderer() = default;
 
     static void init();
-    static void begin(OrthoGraphicCamera& camera);
+    static void begin(const OrthoGraphicCamera& camera);
     static void end();
 
     static void submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<IShader>& shader, const glm::mat4& transformMat = glm::mat4{1.0f});

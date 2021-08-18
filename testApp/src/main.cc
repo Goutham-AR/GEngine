@@ -10,8 +10,7 @@ class TestLayer : public GE::Layer
 public:
     TestLayer()
         : Layer{"TestLayer"},
-          m_camera{-1.6f, 1.6f, -0.9f, 0.9f},
-          m_camPos{0.0f}
+          m_cameraController{16.0f / 9}
     {
 
         m_shaderLib.load("assets/Shaders/default.vert", "assets/Shaders/default.frag");
@@ -72,14 +71,11 @@ public:
 
     void onUpdate(GE::TimeStep& timeStep) override
     {
-        auto deltaTime = timeStep.getSeconds();
 
-        handleInput(deltaTime);
+        m_cameraController.onUpdate(timeStep);
 
         GE::RenderCommand::clear(glm::vec4{0.1f, 0.1f, 0.1f, 1.0f});
-        m_camera.setPosition(m_camPos);
-        m_camera.setRotation(m_camRot * (180 / 3.14));
-        GE::Renderer::begin(m_camera);
+        GE::Renderer::begin(m_cameraController.getCamera());
 
         static auto scaleVec = glm::vec3{0.1f, 0.1f, 0.1f};
         static auto scale = glm::scale(glm::mat4{1.0f}, scaleVec);
@@ -106,15 +102,11 @@ public:
 
     void onEvent(GE::Event& event) override
     {
+        m_cameraController.onEvent(event);
     }
 
     void onImGuiRender() override
     {
-        ImGui::Begin("settings");
-        ImGui::ColorEdit4("Square Color", glm::value_ptr(m_color));
-        ImGui::SliderAngle("Camera Rotation", &m_camRot);
-        ImGui::SliderFloat3("Camera Position", glm::value_ptr(m_camPos), -1.6f, 1.6f);
-        ImGui::End();
     }
 
 private:
@@ -122,33 +114,8 @@ private:
     GE::Sptr<GE::Texture2D> m_tex2D, m_transparentTex;
     GE::Sptr<GE::VertexArray> m_vao;
     GE::Sptr<GE::VertexArray> m_vao2;
-    GE::OrthoGraphicCamera m_camera;
-    glm::vec3 m_camPos;
-    float m_camRot{};
+    GE::OrthoCameraController m_cameraController;
     glm::vec4 m_color{0.2f, 0.6f, 0.9f, 1.0f};
-
-private:
-    inline void handleInput(float deltaTime)
-    {
-        if (GE::Input::isKeyPressed(GE::KeyCode::W) || GE::Input::isKeyPressed(GE::KeyCode::UpArrow))
-        {
-            m_camPos.y -= 1.0f * deltaTime;
-        }
-        else if (GE::Input::isKeyPressed(GE::KeyCode::S) || GE::Input::isKeyPressed(GE::KeyCode::DownArrow))
-        {
-            m_camPos.y += 1.0f * deltaTime;
-        }
-
-        if (GE::Input::isKeyPressed(GE::KeyCode::A) || GE::Input::isKeyPressed(GE::KeyCode::LeftArrow))
-        {
-            m_camPos.x += 1.0f * deltaTime;
-        }
-
-        else if (GE::Input::isKeyPressed(GE::KeyCode::D) || GE::Input::isKeyPressed(GE::KeyCode::RightArrow))
-        {
-            m_camPos.x -= 1.0f * deltaTime;
-        }
-    }
 };
 
 class TestApp : public GE::App
