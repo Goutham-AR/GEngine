@@ -14,15 +14,15 @@ public:
           m_camPos{0.0f}
     {
 
-        m_ShaderProgram.reset(GE::Shader::create("assets/Shaders/vertex.glsl", "assets/Shaders/fragment.glsl"));
-        m_texShaderProgram.reset(GE::Shader::create("assets/Shaders/texShader.vert", "assets/Shaders/texShader.frag"));
+        m_shaderLib.load("assets/Shaders/default.vert", "assets/Shaders/default.frag");
+        m_shaderLib.load("assets/Shaders/texShader.vert", "assets/Shaders/texShader.frag");
+
         m_tex2D = GE::Texture2D::create("assets/Textures/brickWall1.jpg");
         m_transparentTex = GE::Texture2D::create("assets/Textures/ChernoLogo.png");
 
         // Temporary Rendering code
-        m_vao.reset(GE::VertexArray::create());
-
-        std::array<float, 9> vertices{
+        m_vao = GE::VertexArray::create();
+        std::vector<float> vertices{
             -0.5f, -0.5f, 0.0f,
             0.5f, -0.5f, 0.0f,
             0.0f, 0.5f, 0.0f};
@@ -36,18 +36,18 @@ public:
         }
         m_vao->addVertexBuffer(vbo);
 
-        std::array<std::uint32_t, 3> indices{0, 1, 2};
+        std::vector<std::uint32_t> indices{0, 1, 2};
         auto ibo = GE::Sptr<GE::IndexBuffer>(GE::IndexBuffer::create(&indices[0], indices.size()));
         m_vao->addIndexBuffer(ibo);
 
         // second shape
-        m_vao2.reset(GE::VertexArray::create());
-        std::array<float, 20> vertices2{
+        m_vao2 = GE::VertexArray::create();
+        std::vector<float> vertices2{
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
             -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
             0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
             0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
-        vbo.reset(GE::VertexBuffer::create(&vertices2[0], sizeof(float) * vertices2.size()));
+        vbo = GE::VertexBuffer::create(&vertices2[0], sizeof(float) * vertices2.size());
         {
             GE::BufferLayout layout = {
                 {GE::ShaderDataType::Float3, "a_position", false},
@@ -58,8 +58,8 @@ public:
         }
         m_vao2->addVertexBuffer(vbo);
 
-        std::array<std::uint32_t, 6> indices2{0, 1, 2, 2, 3, 0};
-        ibo.reset(GE::IndexBuffer::create(&indices2[0], indices2.size()));
+        std::vector<std::uint32_t> indices2{0, 1, 2, 2, 3, 0};
+        ibo = GE::IndexBuffer::create(&indices2[0], indices2.size());
         m_vao2->addIndexBuffer(ibo);
     }
 
@@ -84,21 +84,21 @@ public:
         static auto scaleVec = glm::vec3{0.1f, 0.1f, 0.1f};
         static auto scale = glm::scale(glm::mat4{1.0f}, scaleVec);
 
-        std::dynamic_pointer_cast<GE::GLShader>(m_ShaderProgram)->setUniform("u_color", m_color);
+        std::dynamic_pointer_cast<GE::GLShader>(m_shaderLib.getShader("default"))->setUniform("u_color", m_color);
 
         for (auto i = 0; i < 10; ++i)
         {
             for (auto j = 0; j < 10; ++j)
             {
                 auto transform = glm::translate(glm::mat4{1.0f}, glm::vec3{i * 0.11, j * 0.11f, 0.2f}) * scale;
-                GE::Renderer::submit(m_vao2, m_ShaderProgram, transform);
+                GE::Renderer::submit(m_vao2, m_shaderLib.getShader("default"), transform);
             }
         }
-        std::dynamic_pointer_cast<GE::GLShader>(m_texShaderProgram)->setUniform("u_texture", 0);
+        std::dynamic_pointer_cast<GE::GLShader>(m_shaderLib.getShader("texShader"))->setUniform("u_texture", 0);
         m_tex2D->bind(0);
-        GE::Renderer::submit(m_vao2, m_texShaderProgram);
+        GE::Renderer::submit(m_vao2, m_shaderLib.getShader("texShader"));
         m_transparentTex->bind(0);
-        GE::Renderer::submit(m_vao2, m_texShaderProgram);
+        GE::Renderer::submit(m_vao2, m_shaderLib.getShader("texShader"));
 
         // GE::Renderer::submit(m_vao, m_ShaderProgram);
         GE::Renderer::end();
@@ -118,8 +118,7 @@ public:
     }
 
 private:
-    GE::Sptr<GE::Shader> m_ShaderProgram;
-    GE::Sptr<GE::Shader> m_texShaderProgram;
+    GE::ShaderLibrary m_shaderLib;
     GE::Sptr<GE::Texture2D> m_tex2D, m_transparentTex;
     GE::Sptr<GE::VertexArray> m_vao;
     GE::Sptr<GE::VertexArray> m_vao2;
