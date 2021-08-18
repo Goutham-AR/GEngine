@@ -5,9 +5,9 @@
 namespace GE
 {
 
-VertexArray* VertexArray::create()
+Sptr<VertexArray> VertexArray::create()
 {
-    return new GLVertexArray{};
+    return Sptr<VertexArray>{new GLVertexArray{}};
 }
 
 }

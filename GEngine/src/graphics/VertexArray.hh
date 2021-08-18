@@ -22,7 +22,7 @@ public:
     [[nodiscard]] virtual const Sptr<IndexBuffer>& getIndexBuffer() const = 0;
     [[nodiscard]] virtual const std::vector<Sptr<VertexBuffer>>& getVertexBuffer() const = 0;
 
-    static VertexArray* create();
+    static Sptr<VertexArray> create();
 };
 
 }
