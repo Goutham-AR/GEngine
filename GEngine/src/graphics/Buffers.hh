@@ -122,7 +122,7 @@ public:
     virtual void setLayout(BufferLayout& layout) = 0;
     [[nodiscard]] virtual const BufferLayout& getLayout() const = 0;
 
-    static VertexBuffer* create(float* vertices, std::size_t size);
+    static Sptr<VertexBuffer> create(float* vertices, std::size_t size);
 };
 
 // --------------------------------------------------------------------
@@ -139,6 +139,6 @@ public:
 
     [[nodiscard]] virtual std::uint32_t getCount() const = 0;
 
-    static IndexBuffer* create(std::uint32_t* indices, std::uint32_t count);
+    static Sptr<IndexBuffer> create(std::uint32_t* indices, std::uint32_t count);
 };
 }

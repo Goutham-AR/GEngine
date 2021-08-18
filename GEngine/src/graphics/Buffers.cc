@@ -59,14 +59,14 @@ GLenum ShaderDataTypeToGLtype(ShaderDataType type)
     GE_ASSERT(false, "Unreachable Code");
 }
 
-VertexBuffer* VertexBuffer::create(float* vertices, std::size_t size)
+Sptr<VertexBuffer> VertexBuffer::create(float* vertices, std::size_t size)
 {
-    return new GLVertexBuffer{vertices, size};
+    return Sptr<VertexBuffer>{new GLVertexBuffer{vertices, size}};
 }
 
-IndexBuffer* IndexBuffer::create(std::uint32_t* indices, std::uint32_t count)
+Sptr<IndexBuffer> IndexBuffer::create(std::uint32_t* indices, std::uint32_t count)
 {
-    return new GLIndexBuffer{indices, count};
+    return Sptr<IndexBuffer>{new GLIndexBuffer{indices, count}};
 }
 
 }
