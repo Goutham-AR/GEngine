@@ -9,7 +9,7 @@
 
 namespace GE
 {
-class GE_PUBLIC GLShader : public Shader
+class GE_PUBLIC GLShader : public IShader
 {
 
 public:
@@ -18,6 +18,7 @@ public:
 
     void bind() const override;
     void unbind() const override;
+    [[nodiscard]] const std::string& getShaderFileName() const override { return m_fileName; }
     void setUniform(std::string_view name, const glm::mat4& mat);
     void setUniform(std::string_view name, const glm::vec4& vec);
     void setUniform(std::string_view name, const glm::vec3& vec);
@@ -25,7 +26,7 @@ public:
 
 private:
     unsigned int m_handle{};
-
+    std::string m_fileName;
     [[nodiscard]] int getUniformLocation(std::string_view name) const;
 };
 

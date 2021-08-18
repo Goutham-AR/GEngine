@@ -15,6 +15,15 @@ namespace GE
 GLShader::GLShader(std::string_view vertexPath, std::string_view fragmentPath)
 {
 
+    {
+        std::string path{vertexPath};
+        auto pos = path.find('.');
+        for (auto i = pos - 1; path[i] != '/'; --i)
+        {
+            m_fileName.insert(m_fileName.begin(), path[i]);
+        }
+        // ENGINE_LOG_TRACE("{0}", m_fileName);
+    }
     // Read our shaders into the appropriate buffers
     auto vertexSource = utils::FileIO::readText(vertexPath);
     auto fragmentSource = utils::FileIO::readText(fragmentPath);
@@ -38,7 +47,8 @@ GLShader::GLShader(std::string_view vertexPath, std::string_view fragmentPath)
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
 
         // The maxLength includes the NULL character
-        std::vector<GLchar> infoLog(maxLength);
+        std::vector<GLchar> infoLog;
+        infoLog.reserve(maxLength);
         glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]);
 
         // We don't need the shader anymore.
@@ -69,7 +79,8 @@ GLShader::GLShader(std::string_view vertexPath, std::string_view fragmentPath)
         glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
 
         // The maxLength includes the NULL character
-        std::vector<GLchar> infoLog(maxLength);
+        std::vector<GLchar> infoLog;
+        infoLog.reserve(maxLength);
         glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &infoLog[0]);
 
         // We don't need the shader anymore.
@@ -105,7 +116,8 @@ GLShader::GLShader(std::string_view vertexPath, std::string_view fragmentPath)
         glGetProgramiv(m_handle, GL_INFO_LOG_LENGTH, &maxLength);
 
         // The maxLength includes the NULL character
-        std::vector<GLchar> infoLog(maxLength);
+        std::vector<GLchar> infoLog;
+        infoLog.reserve(maxLength);
         glGetProgramInfoLog(m_handle, maxLength, &maxLength, &infoLog[0]);
 
         // We don't need the program anymore.
