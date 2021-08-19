@@ -1,6 +1,8 @@
 add_executable(
     testApp2D
     src/main.cc
+    src/TestLayer.cc
+    src/TestLayer.hh
 )
 
 target_link_libraries(
