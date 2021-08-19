@@ -19,4 +19,9 @@ void GLRendererAPI::drawIndexed(const std::shared_ptr<VertexArray>& vao)
 {
     glDrawElements(GL_TRIANGLES, vao->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 }
+void GLRendererAPI::setViewPort(int x, int y, int width, int height)
+{
+    glViewport(x, y, width, height);
+}
+
 }

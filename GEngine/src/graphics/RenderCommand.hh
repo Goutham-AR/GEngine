@@ -19,6 +19,11 @@ public:
     {
         s_rendererAPI->clear(color);
     }
+
+    static void setViewPort(int x, int y, int width, int height)
+    {
+        s_rendererAPI->setViewPort(x, y, width, height);
+    }
     static void drawIndexed(const Sptr<VertexArray>& vao)
     {
         s_rendererAPI->drawIndexed(vao);

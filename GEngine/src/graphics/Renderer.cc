@@ -11,6 +11,10 @@ void Renderer::init()
 {
     RenderCommand::init();
 }
+void Renderer::onWindowResize(int newWidth, int newHeight)
+{
+    RenderCommand::setViewPort(0, 0, newWidth, newHeight);
+}
 
 void Renderer::begin(const OrthoGraphicCamera& camera)
 {

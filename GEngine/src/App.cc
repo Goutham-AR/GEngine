@@ -40,6 +40,18 @@ App::App()
                 {
                     return true;
                 });
+            dispatcher.dispatchEvent<WindowResizeEvent>(
+                [this](WindowResizeEvent& e) -> bool
+                {
+                    if (e.getHeight() == 0 || e.getWidth() == 0)
+                    {
+                        this->m_isMinimised = true;
+                        return false;
+                    }
+                    m_isMinimised = false;
+                    Renderer::onWindowResize(e.getWidth(), e.getHeight());
+                    return false;
+                });
 
             for (auto it = m_layerStack.end() - 1; it != m_layerStack.begin() - 1; --it)
             {
@@ -64,11 +76,13 @@ void App::run()
     {
         auto deltaTime = calculateDeltaTime();
 
-        for (auto layer : m_layerStack)
+        if (!m_isMinimised)
         {
-            layer->onUpdate(deltaTime);
+            for (auto layer : m_layerStack)
+            {
+                layer->onUpdate(deltaTime);
+            }
         }
-
 #if defined(GE_DEBUG)
         ImGuiLayer::begin();
         for (auto layer : m_layerStack)

@@ -17,6 +17,7 @@ public:
     virtual ~Renderer() = default;
 
     static void init();
+    static void onWindowResize(int newWidth, int newHeight);
     static void begin(const OrthoGraphicCamera& camera);
     static void end();
 
