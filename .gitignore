@@ -4,6 +4,7 @@ out
 .idea
 
 # need to double check
-testApp/imgui.ini
+testApp2D/imgui.ini
+testApp3D/imgui.ini
 
 CMakeSettings.json
