@@ -1,22 +1,22 @@
 add_executable(
-    testApp
+    testApp2D
     src/main.cc
 )
 
 target_link_libraries(
-    testApp
+    testApp2D
     PRIVATE
         ge
 )
 
 set_target_properties(
-    testApp
+    testApp2D
     PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY
             ${CMAKE_BINARY_DIR}/bin
 )
 
 set_property(
-    TARGET testApp
+    TARGET testApp2D
     PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )

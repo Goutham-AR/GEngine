@@ -34,4 +34,4 @@ endif()
 add_subdirectory(GEngine)
 
 
-add_subdirectory(testApp)
+add_subdirectory(testApp2D)
