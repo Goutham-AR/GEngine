@@ -1,6 +1,6 @@
 #include "RenderCommand.hh"
 
-#include "GL/GLRendererAPI.hh"
+#include "../GL/GLRendererAPI.hh"
 
 namespace GE
 {

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <common.hh>
-#include "../GraphicsContext.hh"
-
+#include "../Common/GraphicsContext.hh"
 
 struct GLFWwindow;
 
@@ -15,15 +14,11 @@ public:
     GLContext(GLFWwindow* winHandle);
     ~GLContext() override;
 
-
     void init() override;
     void swapBuffers() override;
-
 
 private:
     GLFWwindow* m_winHandle;
 };
-
-
 
 }

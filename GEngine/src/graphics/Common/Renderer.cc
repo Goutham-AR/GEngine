@@ -1,6 +1,6 @@
 #include "Renderer.hh"
 
-#include <graphics/GL/GLShader.hh>
+#include "../GL/GLShader.hh"
 
 namespace GE
 {

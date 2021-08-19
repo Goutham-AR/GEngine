@@ -1,7 +1,7 @@
 #pragma once
 
 #include <common.hh>
-#include "../RendererAPI.hh"
+#include "../Common/RendererAPI.hh"
 
 namespace GE
 {

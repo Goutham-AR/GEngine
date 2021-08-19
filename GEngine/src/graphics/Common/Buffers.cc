@@ -1,6 +1,6 @@
 #include "Buffers.hh"
 
-#include "GL/GLBuffers.hh"
+#include "../GL/GLBuffers.hh"
 
 namespace GE
 {

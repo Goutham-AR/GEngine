@@ -1,6 +1,6 @@
 #include "Texture.hh"
 
-#include "GL/GLTexture.hh"
+#include "../GL/GLTexture.hh"
 
 namespace GE
 {

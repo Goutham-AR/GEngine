@@ -16,13 +16,13 @@
 #include "events/MouseEvent.hh"
 #include "events/AppEvent.hh"
 
-#include "graphics/Renderer.hh"
-#include "graphics/RenderCommand.hh"
-#include "graphics/Shader.hh"
-#include "graphics/VertexArray.hh"
-#include "graphics/Buffers.hh"
-#include "graphics/Cameras.hh"
-#include "graphics/CameraControllers.hh"
-#include "graphics/Texture.hh"
+#include "graphics/Common/Renderer.hh"
+#include "graphics/Common/RenderCommand.hh"
+#include "graphics/Common/Shader.hh"
+#include "graphics/Common/VertexArray.hh"
+#include "graphics/Common/Buffers.hh"
+#include "graphics/Common/Cameras.hh"
+#include "graphics/Common/CameraControllers.hh"
+#include "graphics/Common/Texture.hh"
 
 #include <imgui.h>

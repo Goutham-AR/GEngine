@@ -1,7 +1,7 @@
 #pragma once
 
 #include <common.hh>
-#include "../Texture.hh"
+#include "../Common/Texture.hh"
 
 namespace GE
 {

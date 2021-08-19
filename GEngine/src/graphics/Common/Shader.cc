@@ -1,6 +1,6 @@
 #include "Shader.hh"
 #include <utils/Logger.hh>
-#include "GL/GLShader.hh"
+#include "../GL/GLShader.hh"
 
 namespace GE
 {

@@ -21,16 +21,16 @@ add_library(
         layers/ImGui/ImGuiLayer.cc     layers/ImGui/ImGuiLayer.hh 
         layers/ImGui/ImGuiCore.cc
 
-        graphics/GraphicsContext.hh
-        graphics/Buffers.cc            graphics/Buffers.hh
-        graphics/VertexArray.cc        graphics/VertexArray.hh
-        graphics/Shader.cc             graphics/Shader.hh
-        graphics/Renderer.cc           graphics/Renderer.hh
-        graphics/RendererAPI.cc        graphics/RendererAPI.hh
-        graphics/RenderCommand.cc      graphics/RenderCommand.hh
-        graphics/Cameras.cc            graphics/Cameras.hh
-        graphics/CameraControllers.hh  graphics/CameraControllers.cc
-        graphics/Texture.cc            graphics/Texture.hh
+        graphics/Common/GraphicsContext.hh
+        graphics/Common/Buffers.cc            graphics/Common/Buffers.hh
+        graphics/Common/VertexArray.cc        graphics/Common/VertexArray.hh
+        graphics/Common/Shader.cc             graphics/Common/Shader.hh
+        graphics/Common/Renderer.cc           graphics/Common/Renderer.hh
+        graphics/Common/RendererAPI.cc        graphics/Common/RendererAPI.hh
+        graphics/Common/RenderCommand.cc      graphics/Common/RenderCommand.hh
+        graphics/Common/Cameras.cc            graphics/Common/Cameras.hh
+        graphics/Common/CameraControllers.hh  graphics/Common/CameraControllers.cc
+        graphics/Common/Texture.cc            graphics/Common/Texture.hh
 
         graphics/GL/GLContext.cc       graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc        graphics/GL/GLShader.hh

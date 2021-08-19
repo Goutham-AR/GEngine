@@ -5,7 +5,7 @@
 #include <string_view>
 #include <string>
 
-#include "../Shader.hh"
+#include "../Common/Shader.hh"
 
 namespace GE
 {

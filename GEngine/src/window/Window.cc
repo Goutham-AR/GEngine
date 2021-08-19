@@ -5,7 +5,7 @@
 #include "events/MouseEvent.hh"
 
 #include <utils/Logger.hh>
-#include <graphics/GraphicsContext.hh>
+#include <graphics/Common/GraphicsContext.hh>
 #include <graphics/GL/GLContext.hh>
 
 #include <GLFW/glfw3.h>

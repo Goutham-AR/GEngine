@@ -1,6 +1,6 @@
 #include "VertexArray.hh"
 
-#include "GL/GLVertexArray.hh"
+#include "../GL/GLVertexArray.hh"
 
 namespace GE
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <common.hh>
-#include "../Buffers.hh"
+#include "../Common/Buffers.hh"
 
 namespace GE
 {
