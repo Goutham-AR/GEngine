@@ -2,9 +2,6 @@
 
 #include <GE.hh>
 
-#include "glm/gtc/type_ptr.hpp"
-#include <graphics/GL/GLShader.hh> // temp
-
 class TestLayer : public GE::Layer
 {
 public:
@@ -18,10 +15,9 @@ public:
     void onImGuiRender() override;
 
 private:
-    GE::ShaderLibrary m_shaderLib;
-    GE::Sptr<GE::Texture2D> m_tex2D, m_transparentTex;
+    GE::Sptr<GE::IShader> m_shader;
     GE::Sptr<GE::VertexArray> m_vao;
-    GE::Sptr<GE::VertexArray> m_vao2;
+    GE::Sptr<GE::Texture2D> m_texture;
     GE::OrthoCameraController m_cameraController;
-    glm::vec4 m_color{0.2f, 0.6f, 0.9f, 1.0f};
+    glm::vec4 m_squareColor{0.2f, 0.6f, 0.9f, 1.0f};
 };

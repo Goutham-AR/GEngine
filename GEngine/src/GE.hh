@@ -17,6 +17,7 @@
 #include "events/AppEvent.hh"
 
 #include "graphics/Common/Renderer.hh"
+#include "graphics/Common/Renderer2D.hh"
 #include "graphics/Common/RenderCommand.hh"
 #include "graphics/Common/Shader.hh"
 #include "graphics/Common/VertexArray.hh"
@@ -24,5 +25,8 @@
 #include "graphics/Common/Cameras.hh"
 #include "graphics/Common/CameraControllers.hh"
 #include "graphics/Common/Texture.hh"
+
+#include <glm/glm.hpp>
+#include "glm/gtc/type_ptr.hpp"
 
 #include <imgui.h>

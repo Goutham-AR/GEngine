@@ -38,7 +38,7 @@
 #endif
 
 #include <memory>
-
+#include <glm/vec4.hpp>
 namespace GE
 {
 template <typename T>
@@ -46,6 +46,9 @@ using Sptr = std::shared_ptr<T>;
 
 template <typename T>
 using Uptr = std::unique_ptr<T>;
+
+using Color = glm::vec4;
+
 }
 
 // template <typename T>

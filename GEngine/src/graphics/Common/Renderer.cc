@@ -1,5 +1,5 @@
 #include "Renderer.hh"
-
+#include "Renderer2D.hh"
 #include "../GL/GLShader.hh"
 
 namespace GE
@@ -10,6 +10,7 @@ OrthoGraphicCamera* Renderer::s_camera = nullptr;
 void Renderer::init()
 {
     RenderCommand::init();
+    Renderer2D::init();
 }
 void Renderer::onWindowResize(int newWidth, int newHeight)
 {

@@ -26,6 +26,7 @@ add_library(
         graphics/Common/VertexArray.cc        graphics/Common/VertexArray.hh
         graphics/Common/Shader.cc             graphics/Common/Shader.hh
         graphics/Common/Renderer.cc           graphics/Common/Renderer.hh
+        graphics/Common/Renderer2D.cc           graphics/Common/Renderer2D.hh
         graphics/Common/RendererAPI.cc        graphics/Common/RendererAPI.hh
         graphics/Common/RenderCommand.cc      graphics/Common/RenderCommand.hh
         graphics/Common/Cameras.cc            graphics/Common/Cameras.hh

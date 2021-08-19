@@ -19,10 +19,10 @@ public:
     void bind() const override;
     void unbind() const override;
     [[nodiscard]] const std::string& getShaderFileName() const override { return m_fileName; }
-    void setUniform(std::string_view name, const glm::mat4& mat);
-    void setUniform(std::string_view name, const glm::vec4& vec);
-    void setUniform(std::string_view name, const glm::vec3& vec);
-    void setUniform(std::string_view name, int val);
+    void setUniform(std::string_view name, const glm::mat4& mat) override;
+    void setUniform(std::string_view name, const glm::vec4& vec) override;
+    void setUniform(std::string_view name, const glm::vec3& vec) override;
+    void setUniform(std::string_view name, int val) override;
 
 private:
     unsigned int m_handle{};
