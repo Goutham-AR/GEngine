@@ -35,3 +35,4 @@ add_subdirectory(GEngine)
 
 
 add_subdirectory(testApp2D)
+add_subdirectory(testApp3D)
