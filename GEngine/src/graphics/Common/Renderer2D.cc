@@ -69,7 +69,7 @@ void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, cons
     RenderCommand::drawIndexed(rendererData->quadVao);
 }
 
-void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Sptr<Texture2D>& texture)
+void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Sptr<Texture2D>& texture, float tilingFactor)
 {
     auto transform = glm::translate(glm::mat4{1.0f}, position);
     transform = glm::scale(transform, {size.x, size.y, 1.0f});
@@ -77,6 +77,83 @@ void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, cons
     texture->bind(0);
     rendererData->quadShader->setUniform("u_modelMat", transform);
     rendererData->quadShader->setUniform("u_color", Color{1, 1, 1, 1});
+    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
+    rendererData->quadVao->bind();
+    RenderCommand::drawIndexed(rendererData->quadVao);
+    texture->unbind(0);
+}
+void Renderer2D::drawRotatedQuad(
+    const glm::vec3& position,
+    const glm::vec2& size,
+    const Sptr<Texture2D>& texture,
+    float rotation,
+    float tilingFactor)
+{
+    auto transform = glm::translate(glm::mat4{1.0f}, position);
+    transform = glm::rotate(transform, glm::radians(rotation), glm::vec3{0, 0, 1});
+    transform = glm::scale(transform, {size.x, size.y, 1.0f});
+
+    texture->bind(0);
+    rendererData->quadShader->setUniform("u_modelMat", transform);
+    rendererData->quadShader->setUniform("u_color", Color{1, 1, 1, 1});
+    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
+    rendererData->quadVao->bind();
+    RenderCommand::drawIndexed(rendererData->quadVao);
+    texture->unbind(0);
+}
+void Renderer2D::drawRotatedQuad(
+    const glm::vec3& position,
+    const glm::vec2& size,
+    const Color& color,
+    float rotation,
+    float tilingFactor)
+{
+
+    auto transform = glm::translate(glm::mat4{1.0f}, position);
+    transform = glm::rotate(transform, glm::radians(rotation), glm::vec3{0, 0, 1});
+    transform = glm::scale(transform, {size.x, size.y, 1.0f});
+
+    rendererData->quadShader->setUniform("u_modelMat", transform);
+    rendererData->quadShader->setUniform("u_color", color);
+    rendererData->whiteTexture->bind(0);
+    rendererData->quadVao->bind();
+    RenderCommand::drawIndexed(rendererData->quadVao);
+}
+void Renderer2D::drawTintedQuad(
+    const glm::vec3& position,
+    const glm::vec2& size,
+    const Sptr<Texture2D>& texture,
+    const Color& tintColor,
+    float tilingFactor)
+{
+    auto transform = glm::translate(glm::mat4{1.0f}, position);
+    transform = glm::scale(transform, {size.x, size.y, 1.0f});
+
+    texture->bind(0);
+    rendererData->quadShader->setUniform("u_modelMat", transform);
+    rendererData->quadShader->setUniform("u_color", tintColor);
+    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
+    rendererData->quadVao->bind();
+    RenderCommand::drawIndexed(rendererData->quadVao);
+    texture->unbind(0);
+}
+
+void Renderer2D::drawRotatedTintedQuad(
+    const glm::vec3& position,
+    const glm::vec2& size,
+    const Sptr<Texture2D>& texture,
+    const Color& tintColor,
+    float rotation,
+    float tilingFactor)
+{
+    auto transform = glm::translate(glm::mat4{1.0f}, position);
+    transform = glm::rotate(transform, glm::radians(rotation), glm::vec3{0, 0, 1});
+    transform = glm::scale(transform, {size.x, size.y, 1.0f});
+
+    texture->bind(0);
+    rendererData->quadShader->setUniform("u_modelMat", transform);
+    rendererData->quadShader->setUniform("u_color", tintColor);
+    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
     rendererData->quadVao->bind();
     RenderCommand::drawIndexed(rendererData->quadVao);
     texture->unbind(0);

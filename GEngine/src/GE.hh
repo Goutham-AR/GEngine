@@ -5,6 +5,8 @@
 
 #include "App.hh"
 #include "utils/Logger.hh"
+#include "utils/Instrumentor.hh"
+
 #include "Time.hh"
 
 #include "layers/Layer.hh"

@@ -41,7 +41,8 @@ add_library(
         graphics/GL/GLTexture.cc       graphics/GL/GLTexture.hh
 
         utils/FileIO.cc               utils/FileIO.hh
-        utils/Logger.cc utils/Logger.hh
+        utils/Logger.cc utils/Logger.hh      utils/Instrumentor.hh
+
 
 )
 

@@ -26,8 +26,8 @@ void Renderer::end()
 }
 void Renderer::submit(const Sptr<VertexArray>& vao, const Sptr<IShader>& shader, const glm::mat4& transformMat)
 {
-    std::dynamic_pointer_cast<GLShader>(shader)->setUniform("u_viewProjMat", s_camera->getViewProjectionMat());
-    std::dynamic_pointer_cast<GLShader>(shader)->setUniform("u_modelMat", transformMat);
+    shader->setUniform("u_viewProjMat", s_camera->getViewProjectionMat());
+    shader->setUniform("u_modelMat", transformMat);
     shader->bind();
     vao->bind();
     RenderCommand::drawIndexed(vao);

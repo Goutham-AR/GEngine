@@ -3,6 +3,7 @@
 #include <array>
 
 #include <utils/Logger.hh>
+#include <utils/Instrumentor.hh>
 #include <window/Input.hh>
 #include <window/KeyCode.hh>
 #include <events/AppEvent.hh>
@@ -19,6 +20,7 @@ App::App()
     : m_imGuiLayer{nullptr},
       m_layerStack{}
 {
+    GE_PROFILE_FUNC();
     GE_ASSERT(!appInstance, "Only one App can exist");
     appInstance = this;
 

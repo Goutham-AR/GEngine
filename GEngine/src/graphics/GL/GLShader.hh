@@ -23,6 +23,7 @@ public:
     void setUniform(std::string_view name, const glm::vec4& vec) override;
     void setUniform(std::string_view name, const glm::vec3& vec) override;
     void setUniform(std::string_view name, int val) override;
+    void setUniform(std::string_view name, float val) override;
 
 private:
     unsigned int m_handle{};

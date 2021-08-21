@@ -51,5 +51,7 @@ using Color = glm::vec4;
 
 }
 
+// #define GE_PROFILE
+
 // template <typename T>
 // using Wptr = std::weak_ptr<T>;

@@ -59,4 +59,57 @@ private:
         m_vpMat = m_projMat * m_viewMat;
     }
 };
+
+class GE_PUBLIC PerspectiveCamera
+{
+public:
+    PerspectiveCamera(float aspectRatio, float fov, float near, float far)
+        : m_projMat{glm::perspective(glm::radians(fov), aspectRatio, near, far)},
+          m_viewMat{glm::mat4{1.0f}},
+          m_vpMat{glm::mat4{1.0f}},
+          m_pos{0.0f}
+    {
+        m_viewMat = glm::lookAt(m_pos, m_pos + m_forward, m_up);
+        m_vpMat = m_projMat * m_viewMat;
+    }
+
+    [[nodiscard]] const auto& getProjectionMat() const { return m_projMat; }
+    [[nodiscard]] const auto& getViewMat() const { return m_viewMat; }
+    [[nodiscard]] const auto& getViewProjectionMat() const
+    {
+
+        return m_vpMat;
+    }
+    [[nodiscard]] const auto& getPosition() const { return m_pos; }
+    [[nodiscard]] auto getRotation() const { return m_rotation; }
+
+    void setPosition(const glm::vec3& pos)
+    {
+        m_pos = pos;
+        calcViewMat();
+    }
+    void setRotation(float rotation)
+    {
+        m_rotation = rotation;
+        calcViewMat();
+    }
+
+private:
+    glm::mat4 m_projMat;
+    glm::mat4 m_viewMat;
+    glm::mat4 m_vpMat;
+
+    glm::vec3 m_forward{0, 0, 1};
+    glm::vec3 m_up{0, 1, 0};
+    glm::vec3 m_pos;
+    float m_rotation = 0.0f;
+
+private:
+    void calcViewMat()
+    {
+        m_viewMat = glm::lookAt(m_pos, m_pos + m_forward, m_up);
+        m_vpMat = m_projMat * m_viewMat;
+    }
+};
+
 }
