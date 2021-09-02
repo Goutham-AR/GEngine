@@ -18,9 +18,9 @@
 #include "events/MouseEvent.hh"
 #include "events/AppEvent.hh"
 
-#include "graphics/Common/Renderer.hh"
-#include "graphics/Common/Renderer2D.hh"
-#include "graphics/Common/RenderCommand.hh"
+#include "graphics/Renderer/Renderer.hh"
+#include "graphics/Renderer/Renderer2D.hh"
+#include "graphics/Renderer/RenderCommand.hh"
 #include "graphics/Common/Shader.hh"
 #include "graphics/Common/VertexArray.hh"
 #include "graphics/Common/Buffers.hh"

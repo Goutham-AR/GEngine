@@ -1,7 +1,7 @@
 #include "Renderer2D.hh"
-#include "Shader.hh"
-#include "VertexArray.hh"
 #include "RenderCommand.hh"
+#include "../Common/Shader.hh"
+#include "../Common/VertexArray.hh"
 
 namespace GE
 {
@@ -18,17 +18,16 @@ static R2DData* rendererData = nullptr;
 void Renderer2D::init()
 {
     rendererData = new R2DData{};
-    rendererData->quadShader = GE::IShader::create("assets/Shaders/texShader.vert", "assets/Shaders/texShader.frag");
-    rendererData->quadVao = GE::VertexArray::create();
+    rendererData->quadShader = IShader::create("assets/Shaders/QuadShader.vert", "assets/Shaders/QuadShader.frag");
+    rendererData->quadVao = VertexArray::create();
     rendererData->whiteTexture = Texture2D::create(1, 1);
     uint32_t whiteTextureData = 0xffffffff;
     rendererData->whiteTexture->setData(&whiteTextureData, sizeof(uint32_t));
-    std::vector<float>
-        vertices2{
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
+    std::vector<float> vertices2{
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+        0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
     auto vbo = VertexBuffer::create(&vertices2[0], sizeof(float) * vertices2.size());
     {
         BufferLayout layout = {

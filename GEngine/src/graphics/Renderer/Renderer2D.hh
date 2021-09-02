@@ -1,8 +1,8 @@
 #pragma once
 
 #include <common.hh>
-#include "Cameras.hh"
-#include "Texture.hh"
+#include "../Common/Cameras.hh"
+#include "../Common/Texture.hh"
 namespace GE
 {
 

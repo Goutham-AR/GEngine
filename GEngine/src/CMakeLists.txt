@@ -25,13 +25,14 @@ add_library(
         graphics/Common/Buffers.cc            graphics/Common/Buffers.hh
         graphics/Common/VertexArray.cc        graphics/Common/VertexArray.hh
         graphics/Common/Shader.cc             graphics/Common/Shader.hh
-        graphics/Common/Renderer.cc           graphics/Common/Renderer.hh
-        graphics/Common/Renderer2D.cc           graphics/Common/Renderer2D.hh
-        graphics/Common/RendererAPI.cc        graphics/Common/RendererAPI.hh
-        graphics/Common/RenderCommand.cc      graphics/Common/RenderCommand.hh
         graphics/Common/Cameras.cc            graphics/Common/Cameras.hh
         graphics/Common/CameraControllers.hh  graphics/Common/CameraControllers.cc
         graphics/Common/Texture.cc            graphics/Common/Texture.hh
+        
+        graphics/Renderer/Renderer.cc           graphics/Renderer/Renderer.hh
+        graphics/Renderer/Renderer2D.cc           graphics/Renderer/Renderer2D.hh
+        graphics/Renderer/RendererAPI.cc        graphics/Renderer/RendererAPI.hh
+        graphics/Renderer/RenderCommand.cc      graphics/Renderer/RenderCommand.hh
 
         graphics/GL/GLContext.cc       graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc        graphics/GL/GLShader.hh
