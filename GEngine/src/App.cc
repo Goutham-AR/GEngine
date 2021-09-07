@@ -9,7 +9,7 @@
 #include <events/AppEvent.hh>
 #include <events/KeyEvent.hh>
 #include <Time.hh>
-#include <graphics/Common/Renderer.hh>
+#include <graphics/Renderer/Renderer.hh>
 
 namespace GE
 {

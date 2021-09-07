@@ -1,10 +1,10 @@
 #pragma once
 
 #include <common.hh>
-#include "VertexArray.hh"
+#include "../Common/VertexArray.hh"
+#include "../Common/Cameras.hh"
+#include "../Common/Shader.hh"
 #include "RenderCommand.hh"
-#include "Cameras.hh"
-#include "Shader.hh"
 
 namespace GE
 {

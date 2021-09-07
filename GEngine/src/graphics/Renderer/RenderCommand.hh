@@ -1,7 +1,7 @@
 #pragma once
 
 #include <common.hh>
-#include "VertexArray.hh"
+#include "../Common/VertexArray.hh"
 #include "RendererAPI.hh"
 
 namespace GE

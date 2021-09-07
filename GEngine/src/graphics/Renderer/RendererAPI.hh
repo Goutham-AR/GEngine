@@ -3,7 +3,7 @@
 #include <common.hh>
 #include <glm/vec4.hpp>
 #include <memory>
-#include "VertexArray.hh"
+#include "../Common/VertexArray.hh"
 
 namespace GE
 {
