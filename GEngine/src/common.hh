@@ -17,9 +17,9 @@
 #define BIT(x) (1 << x)
 
 #if defined(_WIN32)
-#define DEBUG_BREAK __debugbreak()
+#define DEBUG_BREAK() __debugbreak()
 #elif defined(__linux__)
-#define DEBUG_BREAK std::exit(1)
+#define DEBUG_BREAK() __asm__ __volatile__("int3")
 #endif
 
 // Assertion Macros
@@ -30,7 +30,7 @@
         {                                                                                          \
             ENGINE_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__);                                \
             ENGINE_LOG_ERROR("Line: {0}, File: {1}, Function: {2}", __LINE__, __FILE__, __func__); \
-            DEBUG_BREAK;                                                                           \
+            DEBUG_BREAK();                                                                         \
         }                                                                                          \
     }
 #else
