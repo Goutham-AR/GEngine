@@ -21,6 +21,15 @@ public:
     void unbind(std::uint32_t slot) override;
     void setData(void* data, size_t size) override;
 
+    static GLTexture2D* createWhiteTexture(uint32_t width, uint32_t height)
+    {
+        auto whiteTexture = new GLTexture2D{width, height};
+        uint32_t whiteTextureData = 0xffffffff;
+        whiteTexture->setData(&whiteTextureData, sizeof(std::uint32_t));
+
+        return whiteTexture;
+    }
+
 private:
     std::uint32_t m_width{};
     std::uint32_t m_height{};

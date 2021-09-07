@@ -6,6 +6,17 @@
 namespace GE
 {
 
+struct alignas(64) Quad
+{
+
+    glm::vec3 Pos;
+    glm::vec2 Size = {1.0f, 1.0f};
+    Color Color = {1.0f, 1.0f, 1.0f, 1.0f};
+    Sptr<Texture2D> Texture = Texture2D::createWhiteTexture(1, 1);
+    float Rotation = 0.0f;
+    float TilingFactor = 1.0f;
+};
+
 class GE_PUBLIC Renderer2D
 {
 
@@ -18,38 +29,6 @@ public:
     static void begin(const OrthoGraphicCamera& camera);
     static void end();
 
-    static void drawQuad(const glm::vec3& position, const glm::vec2& size, const Color& color);
-    static void drawQuad(
-        const glm::vec3& position,
-        const glm::vec2& size,
-        const Sptr<Texture2D>& texture,
-        float tilingFactor = 1.0f);
-    static void drawRotatedQuad(
-        const glm::vec3& position,
-        const glm::vec2& size,
-        const Sptr<Texture2D>& texture,
-        float rotation,
-        float tilingFactor = 1.0f);
-    static void drawRotatedQuad(
-        const glm::vec3& position,
-        const glm::vec2& size,
-        const Color& color,
-        float rotation,
-        float tilingFactor = 1.0f);
-
-    static void drawTintedQuad(
-        const glm::vec3& position,
-        const glm::vec2& size,
-        const Sptr<Texture2D>& texture,
-        const Color& tintColor,
-        float tilingFactor = 1.0f);
-
-    static void drawRotatedTintedQuad(
-        const glm::vec3& position,
-        const glm::vec2& size,
-        const Sptr<Texture2D>& texture,
-        const Color& tintColor,
-        float rotation,
-        float tilingFactor = 1.0f);
+    static void drawQuad(const Quad& quadInfo);
 };
 }

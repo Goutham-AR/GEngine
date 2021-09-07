@@ -13,5 +13,9 @@ Sptr<Texture2D> Texture2D::create(uint32_t width, uint32_t height)
 {
     return Sptr<Texture2D>{new GLTexture2D{width, height}};
 }
+Sptr<Texture2D> Texture2D::createWhiteTexture(uint32_t width, uint32_t height)
+{
+    return Sptr<Texture2D>{GLTexture2D::createWhiteTexture(width, height)};
+}
 
 }

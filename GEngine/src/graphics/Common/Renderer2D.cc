@@ -8,9 +8,8 @@ namespace GE
 
 struct R2DData
 {
-    Sptr<IShader> quadShader;
-    Sptr<VertexArray> quadVao;
-    Sptr<Texture2D> whiteTexture;
+    Sptr<IShader> quadShader = IShader::create("assets/Shaders/QuadShader.vert", "assets/Shaders/QuadShader.frag");
+    Sptr<VertexArray> quadVao = VertexArray::create();
 };
 
 static R2DData* rendererData = nullptr;
@@ -18,11 +17,6 @@ static R2DData* rendererData = nullptr;
 void Renderer2D::init()
 {
     rendererData = new R2DData{};
-    rendererData->quadShader = GE::IShader::create("assets/Shaders/texShader.vert", "assets/Shaders/texShader.frag");
-    rendererData->quadVao = GE::VertexArray::create();
-    rendererData->whiteTexture = Texture2D::create(1, 1);
-    uint32_t whiteTextureData = 0xffffffff;
-    rendererData->whiteTexture->setData(&whiteTextureData, sizeof(uint32_t));
     std::vector<float>
         vertices2{
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -38,11 +32,9 @@ void Renderer2D::init()
         vbo->setLayout(layout);
     }
     rendererData->quadVao->addVertexBuffer(vbo);
-    std::vector<std::uint32_t> indices2{0, 1, 2, 2, 3, 0};
-    auto ibo = IndexBuffer::create(&indices2[0], indices2.size());
+    std::vector<std::uint32_t> indices{0, 1, 2, 2, 3, 0};
+    auto ibo = IndexBuffer::create(&indices[0], indices.size());
     rendererData->quadVao->addIndexBuffer(ibo);
-
-    rendererData->quadShader->setUniform("u_texture", 0);
 }
 void Renderer2D::shutdown()
 {
@@ -53,109 +45,26 @@ void Renderer2D::begin(const OrthoGraphicCamera& camera)
 {
     rendererData->quadShader->bind();
     rendererData->quadShader->setUniform("u_viewProjMat", camera.getViewProjectionMat());
+    rendererData->quadShader->setUniform("u_texture", 0);
 }
 void Renderer2D::end()
 {
 }
-void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Color& color)
-{
-    auto transform = glm::translate(glm::mat4{1.0f}, position);
-    transform = glm::scale(transform, {size.x, size.y, 1.0f});
 
-    rendererData->quadShader->setUniform("u_modelMat", transform);
-    rendererData->quadShader->setUniform("u_color", color);
-    rendererData->whiteTexture->bind(0);
-    rendererData->quadVao->bind();
-    RenderCommand::drawIndexed(rendererData->quadVao);
-}
-
-void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const Sptr<Texture2D>& texture, float tilingFactor)
-{
-    auto transform = glm::translate(glm::mat4{1.0f}, position);
-    transform = glm::scale(transform, {size.x, size.y, 1.0f});
-
-    texture->bind(0);
-    rendererData->quadShader->setUniform("u_modelMat", transform);
-    rendererData->quadShader->setUniform("u_color", Color{1, 1, 1, 1});
-    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
-    rendererData->quadVao->bind();
-    RenderCommand::drawIndexed(rendererData->quadVao);
-    texture->unbind(0);
-}
-void Renderer2D::drawRotatedQuad(
-    const glm::vec3& position,
-    const glm::vec2& size,
-    const Sptr<Texture2D>& texture,
-    float rotation,
-    float tilingFactor)
-{
-    auto transform = glm::translate(glm::mat4{1.0f}, position);
-    transform = glm::rotate(transform, glm::radians(rotation), glm::vec3{0, 0, 1});
-    transform = glm::scale(transform, {size.x, size.y, 1.0f});
-
-    texture->bind(0);
-    rendererData->quadShader->setUniform("u_modelMat", transform);
-    rendererData->quadShader->setUniform("u_color", Color{1, 1, 1, 1});
-    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
-    rendererData->quadVao->bind();
-    RenderCommand::drawIndexed(rendererData->quadVao);
-    texture->unbind(0);
-}
-void Renderer2D::drawRotatedQuad(
-    const glm::vec3& position,
-    const glm::vec2& size,
-    const Color& color,
-    float rotation,
-    float tilingFactor)
+void Renderer2D::drawQuad(const Quad& quadInfo)
 {
 
-    auto transform = glm::translate(glm::mat4{1.0f}, position);
-    transform = glm::rotate(transform, glm::radians(rotation), glm::vec3{0, 0, 1});
-    transform = glm::scale(transform, {size.x, size.y, 1.0f});
+    auto transform = glm::translate(glm::mat4{1.0f}, quadInfo.Pos);
+    transform = glm::rotate(transform, glm::radians(quadInfo.Rotation), glm::vec3{0, 0, 1});
+    transform = glm::scale(transform, {quadInfo.Size.x, quadInfo.Size.y, 1.0f});
 
+    quadInfo.Texture->bind(0);
     rendererData->quadShader->setUniform("u_modelMat", transform);
-    rendererData->quadShader->setUniform("u_color", color);
-    rendererData->whiteTexture->bind(0);
+    rendererData->quadShader->setUniform("u_color", quadInfo.Color);
+    rendererData->quadShader->setUniform("u_tilingFactor", quadInfo.TilingFactor);
     rendererData->quadVao->bind();
     RenderCommand::drawIndexed(rendererData->quadVao);
-}
-void Renderer2D::drawTintedQuad(
-    const glm::vec3& position,
-    const glm::vec2& size,
-    const Sptr<Texture2D>& texture,
-    const Color& tintColor,
-    float tilingFactor)
-{
-    auto transform = glm::translate(glm::mat4{1.0f}, position);
-    transform = glm::scale(transform, {size.x, size.y, 1.0f});
-
-    texture->bind(0);
-    rendererData->quadShader->setUniform("u_modelMat", transform);
-    rendererData->quadShader->setUniform("u_color", tintColor);
-    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
-    rendererData->quadVao->bind();
-    RenderCommand::drawIndexed(rendererData->quadVao);
-    texture->unbind(0);
+    quadInfo.Texture->unbind(0);
 }
 
-void Renderer2D::drawRotatedTintedQuad(
-    const glm::vec3& position,
-    const glm::vec2& size,
-    const Sptr<Texture2D>& texture,
-    const Color& tintColor,
-    float rotation,
-    float tilingFactor)
-{
-    auto transform = glm::translate(glm::mat4{1.0f}, position);
-    transform = glm::rotate(transform, glm::radians(rotation), glm::vec3{0, 0, 1});
-    transform = glm::scale(transform, {size.x, size.y, 1.0f});
-
-    texture->bind(0);
-    rendererData->quadShader->setUniform("u_modelMat", transform);
-    rendererData->quadShader->setUniform("u_color", tintColor);
-    rendererData->quadShader->setUniform("u_tilingFactor", tilingFactor);
-    rendererData->quadVao->bind();
-    RenderCommand::drawIndexed(rendererData->quadVao);
-    texture->unbind(0);
-}
 }

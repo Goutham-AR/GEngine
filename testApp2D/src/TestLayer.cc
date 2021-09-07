@@ -33,12 +33,37 @@ void TestLayer::onUpdate(GE::TimeStep& timeStep)
     {
         GE_PROFILE_SCOPE("Renderer Draw");
         GE::Renderer2D::begin(m_cameraController.getCamera());
-        GE::Renderer2D::drawQuad({0, 0, 0.2}, {1, 1}, m_squareColor);
-        GE::Renderer2D::drawQuad({2.0f, 0.7f, 0.2}, {1, 1}, m_squareColor);
-        GE::Renderer2D::drawQuad({-0.7f, -0.3, 0}, {10, 10}, m_texture);
-        GE::Renderer2D::drawRotatedQuad({3, 2, 0.5}, {3, 3}, m_texture2, 45.0f);
-        GE::Renderer2D::drawRotatedQuad({3, 2, 0.5}, {3, 3}, GE::Color{.4f, .6, .9, 1.0f}, 45.0f);
-        GE::Renderer2D::drawRotatedTintedQuad({-2, -3, 0.3}, {1, 1}, m_texture, GE::Color{0, 1, 0, 1}, 32.0f);
+        GE::Quad quadInfo = {
+            .Pos = {0, 0, 0.2},
+            .Size = {1, 1},
+            .Color = m_squareColor,
+        };
+        GE::Renderer2D::drawQuad(quadInfo);
+        quadInfo = {
+            .Pos = {2.0f, 0.7f, 0.2f},
+            .Size = {1, 1},
+            .Color = m_squareColor,
+            .Rotation = 32,
+        };
+        GE::Renderer2D::drawQuad(quadInfo);
+
+        quadInfo = {
+            .Pos = {-0.7f, -0.3, 0},
+            .Size = {10, 10},
+            .Texture = m_texture,
+            .TilingFactor = 4,
+        };
+        GE::Renderer2D::drawQuad(quadInfo);
+
+        quadInfo = {
+            .Pos = {-2, -3, 0.3},
+            .Size = {1, 1},
+            .Color = GE::Color{0, 1, 0, 1},
+            .Texture = m_texture,
+            .Rotation = 32,
+        };
+        GE::Renderer2D::drawQuad(quadInfo);
+
         GE::Renderer2D::end();
     }
 }

@@ -23,5 +23,6 @@ class GE_PUBLIC Texture2D : public Texture
 public:
     static Sptr<Texture2D> create(std::string_view filePath);
     static Sptr<Texture2D> create(uint32_t width, uint32_t height);
+    static Sptr<Texture2D> createWhiteTexture(uint32_t width, uint32_t height);
 };
 }
