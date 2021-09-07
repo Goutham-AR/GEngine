@@ -17,25 +17,12 @@ static R2DData* rendererData = nullptr;
 void Renderer2D::init()
 {
     rendererData = new R2DData{};
-<<<<<<< HEAD:GEngine/src/graphics/Common/Renderer2D.cc
     std::vector<float>
         vertices2{
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
             -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
             0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
             0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
-=======
-    rendererData->quadShader = IShader::create("assets/Shaders/QuadShader.vert", "assets/Shaders/QuadShader.frag");
-    rendererData->quadVao = VertexArray::create();
-    rendererData->whiteTexture = Texture2D::create(1, 1);
-    uint32_t whiteTextureData = 0xffffffff;
-    rendererData->whiteTexture->setData(&whiteTextureData, sizeof(uint32_t));
-    std::vector<float> vertices2{
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-        0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
->>>>>>> b4aad1e3acca5d8867d9e696e8519dd3706e484c:GEngine/src/graphics/Renderer/Renderer2D.cc
     auto vbo = VertexBuffer::create(&vertices2[0], sizeof(float) * vertices2.size());
     {
         BufferLayout layout = {
