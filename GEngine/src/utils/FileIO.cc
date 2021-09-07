@@ -19,7 +19,9 @@ std::string FileIO::readText(std::string_view filePath)
     }
     // TODO: need proper error handling
     ENGINE_LOG_ERROR("Failed To open file: {0}", filePath.data());
-    std::exit(1);
+    GE_ASSERT(false, " ");
+
+    return std::string{};
 }
 
 }
