@@ -20,6 +20,7 @@ void TestLayer::onDetach()
 
 void TestLayer::onUpdate(GE::TimeStep& timeStep)
 {
+
     GE_PROFILE_FUNC();
 
     {

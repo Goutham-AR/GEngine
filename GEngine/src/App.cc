@@ -110,10 +110,6 @@ void App::pushOverlay(Layer* layer)
     layer->onAttach();
 }
 
-void App::onEvent(Event& e)
-{
-}
-
 // Private funcs
 TimeStep App::calculateDeltaTime()
 {

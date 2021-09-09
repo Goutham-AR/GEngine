@@ -2,14 +2,21 @@
 #include "RenderCommand.hh"
 #include "../Common/Shader.hh"
 #include "../Common/VertexArray.hh"
+#include "../Common/UniformBuffer.hh"
 
 namespace GE
 {
 
-struct R2DData
+struct PerFrameData
+{
+    glm::mat4 ViewProj;
+};
+
+struct alignas(32) R2DData
 {
     Sptr<IShader> quadShader = IShader::create("assets/Shaders/QuadShader.vert", "assets/Shaders/QuadShader.frag");
     Sptr<VertexArray> quadVao = VertexArray::create();
+    Sptr<UniformBuffer<PerFrameData>> perFrameUB = UniformBuffer<PerFrameData>::create(0);
 };
 
 static R2DData* rendererData = nullptr;
@@ -43,8 +50,11 @@ void Renderer2D::shutdown()
 
 void Renderer2D::begin(const OrthoGraphicCamera& camera)
 {
+    PerFrameData perFrameData{};
+    perFrameData.ViewProj = camera.getViewProjectionMat();
+
+    rendererData->perFrameUB->setData(&perFrameData);
     rendererData->quadShader->bind();
-    rendererData->quadShader->setUniform("u_viewProjMat", camera.getViewProjectionMat());
     rendererData->quadShader->setUniform("u_texture", 0);
 }
 void Renderer2D::end()

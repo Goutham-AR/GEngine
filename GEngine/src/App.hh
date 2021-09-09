@@ -22,7 +22,6 @@ public:
 
     void pushLayer(Layer* layer);
     void pushOverlay(Layer* layer);
-    void onEvent(Event& e);
 
     static App& get() { return *appInstance; }
     [[nodiscard]] Window& getWindow() const { return *m_window; }

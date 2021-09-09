@@ -1,13 +1,21 @@
 #version 460 core
 
+
+layout (std140, binding = 0) uniform PerFrameData
+{
+    mat4 u_viewProjMat;
+};
+
+
+
+uniform mat4 u_modelMat;
+
+// Inputs
 layout (location = 0) in vec3 a_position;
 layout (location = 1) in vec2 a_texCoord;
 
-
-uniform mat4 u_viewProjMat;
-uniform mat4 u_modelMat;
-
-out vec2 v_texCoord;
+// Outputs
+layout (location = 0) out vec2 v_texCoord;
 
 void main()
 {

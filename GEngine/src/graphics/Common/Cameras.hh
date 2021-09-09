@@ -8,7 +8,16 @@
 namespace GE
 {
 
-class GE_PUBLIC OrthoGraphicCamera
+class GE_PUBLIC Camera
+{
+public:
+    Camera() = default;
+    virtual ~Camera() = default;
+
+    virtual const glm::mat4& getViewProjectionMat() const = 0;
+};
+
+class GE_PUBLIC OrthoGraphicCamera : public Camera
 {
 public:
     OrthoGraphicCamera(float left, float right, float bottom, float top);
@@ -21,36 +30,53 @@ public:
     OrthoGraphicCamera(const OrthoGraphicCamera&) = default;
     OrthoGraphicCamera& operator=(const OrthoGraphicCamera&) = default;
 
-    // void setProjectionMat(const glm::mat4& projMat) { m_projMat = projMat; }
-    // void setViewMat(const glm::mat4& viewMat) { m_viewMat = viewMat; }
-    // void setViewProjectionMat(const glm::mat4& vpMat) { m_vpMat = vpMat; }
     void setPosition(const glm::vec3& pos)
     {
         m_pos = pos;
-        calcViewMat();
+        m_isDirty = true;
     }
     void setRotation(float rotation)
     {
         m_rotation = rotation;
-        calcViewMat();
+        m_isDirty = true;
     }
 
-    [[nodiscard]] const auto& getProjectionMat() const { return m_projMat; }
-    [[nodiscard]] const auto& getViewMat() const { return m_viewMat; }
-    [[nodiscard]] const auto& getViewProjectionMat() const { return m_vpMat; }
+    [[nodiscard]] const auto& getProjectionMat() const
+    {
+        return m_projMat;
+    }
+    [[nodiscard]] const auto& getViewMat() const
+    {
+        if (m_isDirty)
+        {
+            calcViewMat();
+            m_isDirty = false;
+        }
+        return m_viewMat;
+    }
+    [[nodiscard]] const glm::mat4& getViewProjectionMat() const override
+    {
+        if (m_isDirty)
+        {
+            calcViewMat();
+            m_isDirty = false;
+        }
+        return m_vpMat;
+    }
     [[nodiscard]] const auto& getPosition() const { return m_pos; }
     [[nodiscard]] auto getRotation() const { return m_rotation; }
 
 private:
     glm::mat4 m_projMat;
-    glm::mat4 m_viewMat;
-    glm::mat4 m_vpMat;
-
+    mutable glm::mat4 m_viewMat;
+    mutable glm::mat4 m_vpMat;
     glm::vec3 m_pos;
     float m_rotation = 0.0f;
 
+    mutable bool m_isDirty = false;
+
 private:
-    void calcViewMat()
+    void calcViewMat() const
     {
         auto transformMat = glm::translate(glm::mat4{1.0f}, m_pos);
         transformMat = glm::rotate(transformMat, glm::radians(m_rotation), glm::vec3{0, 0, 1});
@@ -60,55 +86,54 @@ private:
     }
 };
 
-class GE_PUBLIC PerspectiveCamera
+class GE_PUBLIC PerspectiveCamera : public Camera
 {
 public:
-    PerspectiveCamera(float aspectRatio, float fov, float near, float far)
-        : m_projMat{glm::perspective(glm::radians(fov), aspectRatio, near, far)},
-          m_viewMat{glm::mat4{1.0f}},
-          m_vpMat{glm::mat4{1.0f}},
-          m_pos{0.0f}
+    PerspectiveCamera(float fov, float aspectRatio, float near, float far)
+        : m_fov{fov},
+          m_aspectRatio{aspectRatio},
+          m_near{near},
+          m_far{far},
+          m_proj{glm::perspective(m_fov, m_aspectRatio, m_near, m_far)},
+          m_view{1.0f}
     {
-        m_viewMat = glm::lookAt(m_pos, m_pos + m_forward, m_up);
-        m_vpMat = m_projMat * m_viewMat;
+        m_view = m_proj * m_view;
     }
 
-    [[nodiscard]] const auto& getProjectionMat() const { return m_projMat; }
-    [[nodiscard]] const auto& getViewMat() const { return m_viewMat; }
-    [[nodiscard]] const auto& getViewProjectionMat() const
+    [[nodiscard]] const glm::mat4& getViewProjectionMat() const override
     {
-
-        return m_vpMat;
+        return m_viewProj;
     }
-    [[nodiscard]] const auto& getPosition() const { return m_pos; }
-    [[nodiscard]] auto getRotation() const { return m_rotation; }
 
-    void setPosition(const glm::vec3& pos)
+    void rotate(float angle)
     {
-        m_pos = pos;
-        calcViewMat();
     }
-    void setRotation(float rotation)
+
+    void move(const glm::vec3& newPos)
     {
-        m_rotation = rotation;
-        calcViewMat();
     }
 
 private:
-    glm::mat4 m_projMat;
-    glm::mat4 m_viewMat;
-    glm::mat4 m_vpMat;
+    glm::vec3 m_pos{};
+    glm::vec3 m_right = {1, 0, 0};
+    glm::vec3 m_up = {0, 1, 0};
+    glm::vec3 m_look = {0, 0, 1};
 
-    glm::vec3 m_forward{0, 0, 1};
-    glm::vec3 m_up{0, 1, 0};
-    glm::vec3 m_pos;
-    float m_rotation = 0.0f;
+    float m_fov{};
+    float m_aspectRatio{};
+    float m_near{};
+    float m_far{};
+
+    glm::mat4 m_proj{};
+    glm::mat4 m_view{};
+    glm::mat4 m_viewProj{};
+
+    bool m_isDirty = false;
 
 private:
-    void calcViewMat()
+    void calcViewProj()
     {
-        m_viewMat = glm::lookAt(m_pos, m_pos + m_forward, m_up);
-        m_vpMat = m_projMat * m_viewMat;
+        m_viewProj = m_proj * m_view;
     }
 };
 

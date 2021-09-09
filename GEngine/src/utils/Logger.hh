@@ -26,7 +26,7 @@ private:
 };
 }
 
-#if defined GE_DEBUG
+#if defined(GE_DEBUG) | !defined(NDEBUG)
 
 #define ENGINE_LOG_INFO(...) ::GE::utils::Logger::getEngineLogger()->info(__VA_ARGS__)
 #define ENGINE_LOG_WARN(...) ::GE::utils::Logger::getEngineLogger()->warn(__VA_ARGS__)
@@ -40,7 +40,7 @@ private:
 #define LOG_TRACE(...) ::GE::utils::Logger::getClientLogger()->trace(__VA_ARGS__)
 #define LOG_FATAL(...) ::GE::utils::Logger::getClientLogger()->fatal(__VA_ARGS__)
 
-#else
+#else // GE_DEBUG
 
 #define ENGINE_LOG_INFO(...)
 #define ENGINE_LOG_WARN(...)
