@@ -2,6 +2,7 @@ build*
 .vs
 out
 .idea
+vs
 
 # need to double check
 testApp2D/imgui.ini
