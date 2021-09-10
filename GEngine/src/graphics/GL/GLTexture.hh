@@ -20,6 +20,7 @@ public:
     void bind(std::uint32_t slot) override;
     void unbind(std::uint32_t slot) override;
     void setData(void* data, size_t size) override;
+    unsigned int getHandle() const override { return m_handle; }
 
     static GLTexture2D* createWhiteTexture(uint32_t width, uint32_t height)
     {

@@ -13,10 +13,13 @@ class GE_PUBLIC GLVertexBuffer : public VertexBuffer
 {
 public:
     GLVertexBuffer(float* vertices, std::size_t size);
+    GLVertexBuffer(std::size_t size);
     ~GLVertexBuffer() override;
 
     void bind() const override;
     void unbind() const override;
+
+    void setData(const void* data, std::size_t size) override;
 
     void setLayout(BufferLayout& layout) override;
     const BufferLayout& getLayout() const override;

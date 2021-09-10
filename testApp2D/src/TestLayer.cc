@@ -38,8 +38,22 @@ void TestLayer::onUpdate(GE::TimeStep& timeStep)
             .Pos = {0, 0, 0.2},
             .Size = {1, 1},
             .Color = m_squareColor,
+            .Texture = m_texture2,
         };
         GE::Renderer2D::drawQuad(quadInfo);
+        quadInfo.Pos = {0.5, 0.8, 0.3};
+        quadInfo.Size = {2, 2};
+        quadInfo.Color = {0.3, 0.4, 0.5, 1.0};
+        quadInfo.Rotation = 45;
+        quadInfo.Texture = m_texture;
+        quadInfo.TilingFactor = 1;
+        GE::Renderer2D::drawQuad(quadInfo);
+        quadInfo.Pos = {0.8, 0, 0.5};
+        quadInfo.Size = {1, 1};
+        quadInfo.TilingFactor = 10;
+        quadInfo.Color = {1, 1, 1, 1};
+        GE::Renderer2D::drawQuad(quadInfo);
+
         quadInfo = {
             .Pos = {2.0f, 0.7f, 0.2f},
             .Size = {1, 1},
@@ -60,7 +74,7 @@ void TestLayer::onUpdate(GE::TimeStep& timeStep)
             .Pos = {-2, -3, 0.3},
             .Size = {1, 1},
             .Color = GE::Color{0, 1, 0, 1},
-            .Texture = m_texture,
+            .Texture = m_texture2,
             .Rotation = 32,
         };
         GE::Renderer2D::drawQuad(quadInfo);

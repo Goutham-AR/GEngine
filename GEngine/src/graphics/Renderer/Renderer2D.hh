@@ -29,6 +29,8 @@ public:
     static void begin(const OrthoGraphicCamera& camera);
     static void end();
 
+    static void flush();
+
     static void drawQuad(const Quad& quadInfo);
 };
 }

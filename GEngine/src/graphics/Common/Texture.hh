@@ -16,6 +16,8 @@ public:
     virtual void bind(std::uint32_t slot) = 0;
     virtual void unbind(std::uint32_t slot) = 0;
     virtual void setData(void* data, size_t size) = 0;
+
+    virtual unsigned int getHandle() const = 0;
 };
 
 class GE_PUBLIC Texture2D : public Texture

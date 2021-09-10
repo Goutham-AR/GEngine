@@ -176,6 +176,10 @@ void GLShader::setUniform(std::string_view name, int val)
     glProgramUniform1i(m_handle, getUniformLocation(name), val);
 }
 
+void GLShader::setUniform(std::string_view name, int* vals, std::size_t size)
+{
+    glProgramUniform1iv(m_handle, getUniformLocation(name), size, vals);
+}
 void GLShader::setUniform(std::string_view name, float val)
 {
     glProgramUniform1f(m_handle, getUniformLocation(name), val);

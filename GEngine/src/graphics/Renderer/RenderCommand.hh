@@ -24,9 +24,9 @@ public:
     {
         s_rendererAPI->setViewPort(x, y, width, height);
     }
-    static void drawIndexed(const Sptr<VertexArray>& vao)
+    static void drawIndexed(const Sptr<VertexArray>& vao, std::uint32_t count = 0)
     {
-        s_rendererAPI->drawIndexed(vao);
+        s_rendererAPI->drawIndexed(vao, count);
     }
 
 private:

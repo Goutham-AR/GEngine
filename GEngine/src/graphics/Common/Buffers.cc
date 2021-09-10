@@ -63,6 +63,10 @@ Sptr<VertexBuffer> VertexBuffer::create(float* vertices, std::size_t size)
 {
     return Sptr<VertexBuffer>{new GLVertexBuffer{vertices, size}};
 }
+Sptr<VertexBuffer> VertexBuffer::create(std::size_t size)
+{
+    return Sptr<VertexBuffer>{new GLVertexBuffer{size}};
+}
 
 Sptr<IndexBuffer> IndexBuffer::create(std::uint32_t* indices, std::uint32_t count)
 {

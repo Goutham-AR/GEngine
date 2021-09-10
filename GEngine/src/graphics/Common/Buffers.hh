@@ -122,7 +122,10 @@ public:
     virtual void setLayout(BufferLayout& layout) = 0;
     [[nodiscard]] virtual const BufferLayout& getLayout() const = 0;
 
+    virtual void setData(const void* data, std::size_t size) = 0;
+
     static Sptr<VertexBuffer> create(float* vertices, std::size_t size);
+    static Sptr<VertexBuffer> create(std::size_t size);
 };
 
 // --------------------------------------------------------------------
