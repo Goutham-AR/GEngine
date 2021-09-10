@@ -16,7 +16,7 @@ struct alignas(32) R2DData
 {
     Sptr<IShader> quadShader = IShader::create("assets/Shaders/QuadShader.vert", "assets/Shaders/QuadShader.frag");
     Sptr<VertexArray> quadVao = VertexArray::create();
-    Sptr<UniformBuffer<PerFrameData>> perFrameUB = UniformBuffer<PerFrameData>::create(0);
+    Sptr<UniformBuffer<PerFrameData>> perFrameUniformBuffer = UniformBuffer<PerFrameData>::create(0);
 };
 
 static R2DData* rendererData = nullptr;
@@ -53,7 +53,7 @@ void Renderer2D::begin(const OrthoGraphicCamera& camera)
     PerFrameData perFrameData{};
     perFrameData.ViewProj = camera.getViewProjectionMat();
 
-    rendererData->perFrameUB->setData(&perFrameData);
+    rendererData->perFrameUniformBuffer->setData(&perFrameData);
     rendererData->quadShader->bind();
     rendererData->quadShader->setUniform("u_texture", 0);
 }
