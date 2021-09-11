@@ -23,6 +23,10 @@ void TestLayer::onUpdate(GE::TimeStep& timeStep)
 
     GE_PROFILE_FUNC();
 
+    m_deltaTime = timeStep.getSeconds();
+
+    GE::Renderer2D::resetStats();
+
     {
         GE_PROFILE_SCOPE("CameraController::onUpdate");
         m_cameraController.onUpdate(timeStep);
@@ -80,6 +84,23 @@ void TestLayer::onUpdate(GE::TimeStep& timeStep)
         GE::Renderer2D::drawQuad(quadInfo);
 
         GE::Renderer2D::end();
+
+        GE::Renderer2D::begin(m_cameraController.getCamera());
+        for (float y = -5.0f; y < 5.0f; y += 0.05f)
+        {
+            for (float x = -5.0f; x < 5.0f; x += 0.05f)
+            {
+                glm::vec4 color = {(x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.5f};
+
+                static GE::Quad quad;
+                quad.Pos = {x, y, 0.1};
+                quad.Size = {0.45, 0.45};
+                quad.Color = color;
+                GE::Renderer2D::drawQuad(quad);
+            }
+        }
+
+        GE::Renderer2D::end();
     }
 }
 
@@ -91,6 +112,15 @@ void TestLayer::onEvent(GE::Event& event)
 void TestLayer::onImGuiRender()
 {
     GE_PROFILE_FUNC();
+    ImGui::Begin("Renderer2D stats");
+    auto rendererStats = GE::Renderer2D::getStats();
+    ImGui::Text("Draw Calls: %d", rendererStats.numDrawCall);
+    ImGui::Text("Quad Count: %d", rendererStats.quadCount);
+    ImGui::Text("Vertices  : %d", rendererStats.getTotalVertexCount());
+    ImGui::Text("Indices   : %d", rendererStats.getTotalIndexCount());
+    ImGui::Text("FPS       : %f", 1 / m_deltaTime);
+    ImGui::End();
+
     ImGui::Begin("color picker");
     ImGui::ColorPicker4("Square Color", glm::value_ptr(m_squareColor));
     ImGui::End();

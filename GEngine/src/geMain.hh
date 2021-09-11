@@ -3,9 +3,11 @@
 #include "App.hh"
 #include "utils/Logger.hh"
 #include "utils/Instrumentor.hh"
+#include <filesystem>
 
 int main(int argc, char** argv)
 {
+
     GE::utils::Logger::init();
 
     GE_PROFILE_BEGIN("App startup", "AppStartupTrace.json");

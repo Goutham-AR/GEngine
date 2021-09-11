@@ -32,5 +32,21 @@ public:
     static void flush();
 
     static void drawQuad(const Quad& quadInfo);
+
+    struct Stats
+    {
+        std::uint32_t numDrawCall = 0;
+        std::uint32_t quadCount = 0;
+
+        std::uint32_t getTotalVertexCount() const { return quadCount * 4; }
+        std::uint32_t getTotalIndexCount() const { return quadCount * 6; }
+    };
+    static Stats getStats();
+    static void resetStats();
+
+private:
+    static void startNewBatch();
+    static void resetBatchData();
+    static void copyBatchData();
 };
 }

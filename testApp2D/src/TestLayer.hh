@@ -21,4 +21,6 @@ private:
     GE::Sptr<GE::Texture2D> m_texture2;
     GE::OrthoCameraController m_cameraController;
     glm::vec4 m_squareColor{0.2f, 0.6f, 0.9f, 1.0f};
+
+    float m_deltaTime;
 };

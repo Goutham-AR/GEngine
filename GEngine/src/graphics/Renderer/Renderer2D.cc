@@ -25,7 +25,7 @@ struct QuadVertex
 
 struct R2DData
 {
-    static constexpr std::uint32_t MAX_QUADS = 10'000;
+    static constexpr std::uint32_t MAX_QUADS = 20'000;
     static constexpr std::uint32_t MAX_VERTICES = MAX_QUADS * 4;
     static constexpr std::uint32_t MAX_INDICES = MAX_QUADS * 6;
     static constexpr std::uint32_t MAX_TEXTURES = 32;
@@ -43,6 +43,8 @@ struct R2DData
     std::uint32_t textureSlotIndex = 0;
 
     glm::vec4 quadVertexPositions[4];
+
+    Renderer2D::Stats stats;
 };
 
 static R2DData* rendererData = nullptr;
@@ -111,13 +113,15 @@ void Renderer2D::begin(const OrthoGraphicCamera& camera)
 
     rendererData->quadShader->bind();
     rendererData->quadShader->setUniform("u_textures", samplers, R2DData::MAX_TEXTURES);
-    rendererData->quadIndexCount = 0;
-    rendererData->textureSlotIndex = 0;
-    rendererData->quadVertexBufferPtr = rendererData->quadVertexBufferBase;
+    resetBatchData();
 }
 
 void Renderer2D::drawQuad(const Quad& quadInfo)
 {
+    if (rendererData->quadIndexCount >= R2DData::MAX_INDICES)
+    {
+        startNewBatch();
+    }
 
     float textureIndex = -1.0f;
     for (std::uint32_t i = 0; i < rendererData->textureSlotIndex; ++i)
@@ -168,6 +172,8 @@ void Renderer2D::drawQuad(const Quad& quadInfo)
     rendererData->quadVertexBufferPtr++;
 
     rendererData->quadIndexCount += 6;
+
+    rendererData->stats.quadCount++;
 }
 
 void Renderer2D::flush()
@@ -177,13 +183,40 @@ void Renderer2D::flush()
         rendererData->textureSlots[i]->bind(i);
     }
     RenderCommand::drawIndexed(rendererData->quadVao, rendererData->quadIndexCount);
+    rendererData->stats.numDrawCall++;
 }
 
 void Renderer2D::end()
 {
-    auto dataSize = (std::uint8_t*)rendererData->quadVertexBufferPtr - (std::uint8_t*)rendererData->quadVertexBufferBase;
-    rendererData->quadVB->setData(rendererData->quadVertexBufferBase, dataSize);
+    copyBatchData();
     flush();
 }
 
+void Renderer2D::startNewBatch()
+{
+    copyBatchData();
+    flush();
+    resetBatchData();
+}
+Renderer2D::Stats Renderer2D::getStats()
+{
+    return rendererData->stats;
+}
+void Renderer2D::resetStats()
+{
+    rendererData->stats.numDrawCall = 0;
+    rendererData->stats.quadCount = 0;
+}
+
+void Renderer2D::resetBatchData()
+{
+    rendererData->quadIndexCount = 0;
+    rendererData->textureSlotIndex = 0;
+    rendererData->quadVertexBufferPtr = rendererData->quadVertexBufferBase;
+}
+void Renderer2D::copyBatchData()
+{
+    auto dataSize = (std::uint8_t*)rendererData->quadVertexBufferPtr - (std::uint8_t*)rendererData->quadVertexBufferBase;
+    rendererData->quadVB->setData(rendererData->quadVertexBufferBase, dataSize);
+}
 }

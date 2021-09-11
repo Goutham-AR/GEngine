@@ -85,14 +85,14 @@ void App::run()
                 layer->onUpdate(deltaTime);
             }
         }
-#if defined(GE_DEBUG)
+        // #if defined(GE_DEBUG)
         ImGuiLayer::begin();
         for (auto layer : m_layerStack)
         {
             layer->onImGuiRender();
         }
         ImGuiLayer::end();
-#endif
+        // #endif
 
         m_window->onUpdate();
     }

@@ -3,6 +3,7 @@ build*
 out
 .idea
 vs
+bin
 
 # need to double check
 testApp2D/imgui.ini
