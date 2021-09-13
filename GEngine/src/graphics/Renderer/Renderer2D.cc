@@ -25,7 +25,7 @@ struct QuadVertex
 
 struct R2DData
 {
-    static constexpr std::uint32_t MAX_QUADS = 20'000;
+    static constexpr std::uint32_t MAX_QUADS = 10'000;
     static constexpr std::uint32_t MAX_VERTICES = MAX_QUADS * 4;
     static constexpr std::uint32_t MAX_INDICES = MAX_QUADS * 6;
     static constexpr std::uint32_t MAX_TEXTURES = 32;
@@ -118,6 +118,11 @@ void Renderer2D::begin(const OrthoGraphicCamera& camera)
 
 void Renderer2D::drawQuad(const Quad& quadInfo)
 {
+
+    // float x = 2, y = 3;
+    // float sheetWidth = quadInfo.Texture->getWidth(), sheetHeight = quadInfo.Texture->getHeight();
+    // float spriteWidth = 128, spriteHeight = 128;
+
     if (rendererData->quadIndexCount >= R2DData::MAX_INDICES)
     {
         startNewBatch();
@@ -145,28 +150,28 @@ void Renderer2D::drawQuad(const Quad& quadInfo)
 
     rendererData->quadVertexBufferPtr->pos = transform * rendererData->quadVertexPositions[0];
     rendererData->quadVertexBufferPtr->color = quadInfo.Color;
-    rendererData->quadVertexBufferPtr->texCoord = {0.0f, 0.0f};
+    rendererData->quadVertexBufferPtr->texCoord = quadInfo.SubTexture->m_subTexCoord[0];
     rendererData->quadVertexBufferPtr->texID = textureIndex;
     rendererData->quadVertexBufferPtr->tilingFactor = quadInfo.TilingFactor;
     rendererData->quadVertexBufferPtr++;
 
     rendererData->quadVertexBufferPtr->pos = transform * rendererData->quadVertexPositions[1];
     rendererData->quadVertexBufferPtr->color = quadInfo.Color;
-    rendererData->quadVertexBufferPtr->texCoord = {1.0f, 0.0f};
+    rendererData->quadVertexBufferPtr->texCoord = quadInfo.SubTexture->m_subTexCoord[1];
     rendererData->quadVertexBufferPtr->texID = textureIndex;
     rendererData->quadVertexBufferPtr->tilingFactor = quadInfo.TilingFactor;
     rendererData->quadVertexBufferPtr++;
 
     rendererData->quadVertexBufferPtr->pos = transform * rendererData->quadVertexPositions[2];
     rendererData->quadVertexBufferPtr->color = quadInfo.Color;
-    rendererData->quadVertexBufferPtr->texCoord = {1.0f, 1.0f};
+    rendererData->quadVertexBufferPtr->texCoord = quadInfo.SubTexture->m_subTexCoord[2];
     rendererData->quadVertexBufferPtr->texID = textureIndex;
     rendererData->quadVertexBufferPtr->tilingFactor = quadInfo.TilingFactor;
     rendererData->quadVertexBufferPtr++;
 
     rendererData->quadVertexBufferPtr->pos = transform * rendererData->quadVertexPositions[3];
     rendererData->quadVertexBufferPtr->color = quadInfo.Color;
-    rendererData->quadVertexBufferPtr->texCoord = {0.0f, 1.0f};
+    rendererData->quadVertexBufferPtr->texCoord = quadInfo.SubTexture->m_subTexCoord[3];
     rendererData->quadVertexBufferPtr->texID = textureIndex;
     rendererData->quadVertexBufferPtr->tilingFactor = quadInfo.TilingFactor;
     rendererData->quadVertexBufferPtr++;

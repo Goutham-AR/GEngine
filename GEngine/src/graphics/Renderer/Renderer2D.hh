@@ -13,6 +13,7 @@ struct alignas(64) Quad
     glm::vec2 Size = {1.0f, 1.0f};
     Color Color = {1.0f, 1.0f, 1.0f, 1.0f};
     Sptr<Texture2D> Texture = Texture2D::createWhiteTexture(1, 1);
+    Sptr<SubTexture2D> SubTexture = SubTexture2D::create();
     float Rotation = 0.0f;
     float TilingFactor = 1.0f;
 };
