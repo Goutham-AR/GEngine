@@ -142,7 +142,7 @@ void TestLayer::onImGuiRender()
 
     if (ImGui::BeginMenuBar())
     {
-        if (ImGui::BeginMenu("Options"))
+        if (ImGui::BeginMenu("File"))
         {
             // Disabling fullscreen would allow the window to be moved to the front of other windows,
             // which we can't undo at the moment without finer window depth/z control.
@@ -150,30 +150,11 @@ void TestLayer::onImGuiRender()
             ImGui::MenuItem("Padding", NULL, &opt_padding);
             ImGui::Separator();
 
-            if (ImGui::MenuItem("Flag: NoSplit", "", (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0))
+            if (ImGui::MenuItem("Exit"))
             {
-                dockspace_flags ^= ImGuiDockNodeFlags_NoSplit;
+                GE::App::get().close();
             }
-            if (ImGui::MenuItem("Flag: NoResize", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0))
-            {
-                dockspace_flags ^= ImGuiDockNodeFlags_NoResize;
-            }
-            if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))
-            {
-                dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode;
-            }
-            if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0))
-            {
-                dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar;
-            }
-            if (ImGui::MenuItem("Flag: PassthruCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0, opt_fullscreen))
-            {
-                dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode;
-            }
-            ImGui::Separator();
 
-            if (ImGui::MenuItem("Close", NULL, false))
-                dockSpaceOpen = false;
             ImGui::EndMenu();
         }
 
@@ -191,6 +172,8 @@ void TestLayer::onImGuiRender()
 
     ImGui::Begin("color picker");
     ImGui::ColorPicker4("Square Color", glm::value_ptr(m_squareColor));
+    auto texId = m_texture->getHandle();
+    ImGui::Image((void*)texId, ImVec2{64.0f, 64.0f});
     ImGui::End();
 
     ImGui::End();

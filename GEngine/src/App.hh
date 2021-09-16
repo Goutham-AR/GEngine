@@ -26,6 +26,8 @@ public:
     static App& get() { return *appInstance; }
     [[nodiscard]] Window& getWindow() const { return *m_window; }
 
+    void close() { m_isRunning = false; }
+
 private:
     Uptr<Window> m_window;
     ImGuiLayer* m_imGuiLayer;
