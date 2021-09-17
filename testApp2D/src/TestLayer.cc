@@ -30,6 +30,12 @@ void TestLayer::onAttach()
     m_textureMap['D'] = GE::SubTexture2D::createFromCoords(m_spriteSheet, {6, 11}, {128, 128});
     m_textureMap['w'] = GE::SubTexture2D::createFromCoords(m_spriteSheet, {11, 11}, {128, 128});
     m_textureMap['G'] = GE::SubTexture2D::createFromCoords(m_spriteSheet, {1, 11}, {128, 128});
+
+    GE::FrameBufferSpec spec{};
+    spec.width = GE::App::get().getWindow().getWidth();
+    spec.height = GE::App::get().getWindow().getHeight();
+
+    m_frameBuffer = GE::FrameBuffer::create(spec);
 }
 
 void TestLayer::onDetach()
@@ -45,39 +51,29 @@ void TestLayer::onUpdate(GE::TimeStep& timeStep)
 
     m_deltaTime = timeStep.getSeconds();
 
+    m_cameraController.onUpdate(timeStep);
+
+    m_frameBuffer->bind();
     GE::Renderer2D::resetStats();
-
+    GE::RenderCommand::clear(GE::Color{1.0f, 0.1f, 0.1f, 1.0f});
+    GE::Renderer2D::begin(m_cameraController.getCamera());
+    // drawTest(timeStep);
+    GE::Quad quad{};
+    for (std::uint32_t y = 0; y < s_mapHeight; ++y)
     {
-        GE_PROFILE_SCOPE("CameraController::onUpdate");
-        m_cameraController.onUpdate(timeStep);
-    }
-    {
-        GE_PROFILE_SCOPE("RenderCommand::clear");
-        GE::RenderCommand::clear(glm::vec4{0.1f, 0.1f, 0.1f, 1.0f});
-    }
-    {
-        GE_PROFILE_SCOPE("Renderer Draw");
-        GE::Renderer2D::begin(m_cameraController.getCamera());
-
-        // drawTest(timeStep);
-
-        GE::Quad quad{};
-        for (std::uint32_t y = 0; y < s_mapHeight; ++y)
+        for (std::uint32_t x = 0; x < s_mapWidth; ++x)
         {
-            for (std::uint32_t x = 0; x < s_mapWidth; ++x)
-            {
-                auto c = s_mapTiles[x + y * s_mapWidth];
-                quad.Texture = m_spriteSheet;
-                quad.SubTexture = m_textureMap[c];
-                quad.Size = {1, 1};
-                quad.Pos = {x - s_mapWidth / 2.0f, y - s_mapHeight / 2.0f, 0};
+            auto c = s_mapTiles[x + y * s_mapWidth];
+            quad.Texture = m_spriteSheet;
+            quad.SubTexture = m_textureMap[c];
+            quad.Size = {1, 1};
+            quad.Pos = {x - s_mapWidth / 2.0f, y - s_mapHeight / 2.0f, 0};
 
-                GE::Renderer2D::drawQuad(quad);
-            }
+            GE::Renderer2D::drawQuad(quad);
         }
-
-        GE::Renderer2D::end();
     }
+    GE::Renderer2D::end();
+    m_frameBuffer->unbind();
 }
 
 void TestLayer::onEvent(GE::Event& event)
@@ -172,8 +168,8 @@ void TestLayer::onImGuiRender()
 
     ImGui::Begin("color picker");
     ImGui::ColorPicker4("Square Color", glm::value_ptr(m_squareColor));
-    auto texId = m_texture->getHandle();
-    ImGui::Image((void*)texId, ImVec2{64.0f, 64.0f});
+    auto texId = m_frameBuffer->getColorAttachment();
+    ImGui::Image((void*)texId, ImVec2{320.0f, 180.0f});
     ImGui::End();
 
     ImGui::End();

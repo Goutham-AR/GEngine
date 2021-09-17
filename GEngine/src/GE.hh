@@ -21,6 +21,7 @@
 #include "graphics/Renderer/Renderer.hh"
 #include "graphics/Renderer/Renderer2D.hh"
 #include "graphics/Renderer/RenderCommand.hh"
+#include "graphics/Renderer/FrameBuffer.hh"
 #include "graphics/Common/Shader.hh"
 #include "graphics/Common/VertexArray.hh"
 #include "graphics/Common/Buffers.hh"

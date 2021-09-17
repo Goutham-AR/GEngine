@@ -33,6 +33,7 @@ add_library(
         graphics/Renderer/Renderer2D.cc           graphics/Renderer/Renderer2D.hh
         graphics/Renderer/RendererAPI.cc        graphics/Renderer/RendererAPI.hh
         graphics/Renderer/RenderCommand.cc      graphics/Renderer/RenderCommand.hh
+        graphics/Renderer/FrameBuffer.cc      graphics/Renderer/FrameBuffer.hh
 
         graphics/GL/GLContext.cc       graphics/GL/GLContext.hh
         graphics/GL/GLShader.cc        graphics/GL/GLShader.hh
@@ -40,6 +41,7 @@ add_library(
         graphics/GL/GLVertexArray.cc   graphics/GL/GLVertexArray.hh
         graphics/GL/GLRendererAPI.cc   graphics/GL/GLRendererAPI.hh
         graphics/GL/GLTexture.cc       graphics/GL/GLTexture.hh
+        graphics/GL/GLFrameBuffer.cc       graphics/GL/GLFrameBuffer.hh
 
         utils/FileIO.cc               utils/FileIO.hh
         utils/Logger.cc utils/Logger.hh      utils/Instrumentor.hh
