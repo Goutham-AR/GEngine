@@ -1,4 +1,4 @@
-# GEngine ('G' does not stand for Game :P)
+# GEngine
 
 A Cross Platform Game Engine
 
@@ -11,10 +11,7 @@ A Cross Platform Game Engine
     You can use Cmake to Generate and build. All Dependencies are provided alongside the engine source
 
 ### For Linux
-    1.Install the necessary dependencies
-- libGL
-- libX11
-- ...
+    TODO
 
 
 ### For Mac
